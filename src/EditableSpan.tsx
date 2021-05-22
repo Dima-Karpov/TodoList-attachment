@@ -1,38 +1,38 @@
+import { TextField } from '@material-ui/core';
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 
-type EditableSpanPopsType = {
+type EditableSpanPropsType = {
     title: string
-    changeTitle: (newValue: string) => void
-}
+    changeTitle: (value: string) => void
 
-export function EditableSpan(props: EditableSpanPopsType) {
+};
 
-    const [editMode, setEditMode] = useState<boolean>(false);
-    const [newTaskTitle, setNewTaskTitle] = useState('');
+export function EditableSpan(props: EditableSpanPropsType) {
+
+    const [editMode, setEditMode] = useState(false);
+    const [newTaskTitle, setNewTaskTitle] = useState('')
 
     const onEditMode = () => setEditMode(true);
-    const offEditMode = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            setEditMode(false);
-            props.changeTitle(newTaskTitle);
-        }
+    const OffEditMode = () => {
+        setEditMode(false);
+        props.changeTitle(newTaskTitle)
+        // setNewTaskTitle('') нужно подумать следует ли так делать
     };
-
     const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTaskTitle(e.currentTarget.value)
-    };
-
+    }
 
     return (
-        editMode
-            ? <input
+        editMode ?
+            <TextField
                 value={newTaskTitle}
+                onBlur={OffEditMode}
                 autoFocus
                 onChange={onChangeTitle}
-                onKeyPress={offEditMode}
-                
-
-            />
-            : <span onDoubleClick={onEditMode}>{props.title}</span>
-    );
-}
+            /> :
+            <span
+                onDoubleClick={onEditMode}
+            >
+                {props.title}</span>
+    )
+};
