@@ -1,10 +1,11 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { AddItemFrom } from './AddItemFrom';
-import { FilterValueTpe } from './App';
-import { EditableSpan } from './EditableSpan';
+
 import { Checkbox, IconButton } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { EditableSpan } from './EditableSpan';
+import { FilterValueTpe } from './App';
 
 export type TaskType = {
     id: string
@@ -16,10 +17,10 @@ export type PropsType = {
     title: string
     tasks: Array<TaskType>
     filter: FilterValueTpe
-    todoListsID: string
+    todoListID: string
 
     removeTasks: (id: string, todoListID: string) => void
-    changeFilter: (value: FilterValueTpe, todoListID: string) => void
+    changeFilter: (todoListID: string, value: FilterValueTpe) => void
     addTask: (title: string, todoListID: string) => void
     changeTaskStatus: (id: string, isDone: boolean, todoListID: string) => void
     removeTodoList: (todoListID: string) => void
@@ -32,15 +33,15 @@ export function TodoList(props: PropsType) {
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
             props.changeTaskStatus(t.id,
                 e.currentTarget.checked,
-                props.todoListsID)
+                props.todoListID)
         };
-        const removeTask = () => props.removeTasks(t.id, props.todoListsID);
+        const removeTask = () => props.removeTasks(t.id, props.todoListID);
         
         const onChangeTaskTitle = (newTitle: string) => {
             props.changeTaskTitle(
                 t.id,
                 newTitle,
-                props.todoListsID
+                props.todoListID
             )
         };
 
@@ -68,19 +69,19 @@ export function TodoList(props: PropsType) {
         )
     });
 
-    const onClickAllFilter = () => { props.changeFilter('all', props.todoListsID) };
-    const onClickActiveFilter = () => { props.changeFilter('active', props.todoListsID) };
-    const onClickCompletedFilter = () => { props.changeFilter('completed', props.todoListsID) };
+    const onClickAllFilter = () => { props.changeFilter(props.todoListID, 'all') };
+    const onClickActiveFilter = () => { props.changeFilter(props.todoListID, 'active') };
+    const onClickCompletedFilter = () => { props.changeFilter(props.todoListID, 'completed') };
 
     const removeTodoList = () => {
-        props.removeTodoList(props.todoListsID)
+        props.removeTodoList(props.todoListID)
     };
     const addTask = (title: string) => {
-        props.addTask(title, props.todoListsID)
+        props.addTask(title, props.todoListID)
     };
 
     const changeTodoListTitle = (newTitle: string) => {
-        props.changeTodoListTitle(props.todoListsID, newTitle)
+        props.changeTodoListTitle(props.todoListID, newTitle)
     };
 
     return (
@@ -119,9 +120,3 @@ export function TodoList(props: PropsType) {
         </div>
     )
 }
-
-
-
-
-
-

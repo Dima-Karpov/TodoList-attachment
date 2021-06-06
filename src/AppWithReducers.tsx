@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { v1 } from 'uuid';
 import { AddItemFrom } from './AddItemFrom';
 import './App.css';
@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Container, Grid, Paper } from '@material-ui/core';
+import { addTodoListAC, changeTodoListFilterAC, changeTodoListTitleAC, removeTodoListAC, todoListReduser} from './state/TodoList-reducer';
+import { removeTasksAC, tasksReducer, addTaskAC, changeTaskStatusAC, chageTaskTitleAC } from './state/task-reducer';
 
 
 export type FilterValueTpe = 'all' | 'active' | 'completed'
@@ -24,11 +26,11 @@ export type TaskStateType = {
     [key: string]: TaskType[]
 };
 
-function App() {
+export function AppWithReducers() {
 
     const todoListID_1 = v1();
     const todoListID_2 = v1();
-    const [todoLists, setTodoLists] = useState<TodoListType[]>(
+    const [todoLists, dispatchTodoLists] = useReducer(todoListReduser, 
         [
             {
                 id: todoListID_1,
@@ -43,7 +45,7 @@ function App() {
         ]
     );
 
-    const [tasks, setTasks] = useState<TaskStateType>(
+    const [tasks, dispathTasks] = useReducer(tasksReducer, 
         {
             [todoListID_1]: [
                 { id: v1(), title: "HTML&CSS", isDone: true },
@@ -61,30 +63,18 @@ function App() {
     );
 
     function removeTasks(id: string, todoListID: string) {
-        tasks[todoListID] = tasks[todoListID].filter(t => t.id !== id);
-        setTasks({ ...tasks })
+        dispathTasks(removeTasksAC(id, todoListID));
     };
 
     function addTask(title: string, todoListID: string) {
-        const newTask = {
-            id: v1(),
-            title: title,
-            isDone: false
-        }
-        setTasks({ ...tasks, [todoListID]: [newTask, ...tasks[todoListID]] });
+        dispathTasks(addTaskAC(title, todoListID));
     };
 
     function changeStatus(id: string, isDone: boolean, todoListID: string) {
-        setTasks({
-            ...tasks,
-            [todoListID]: tasks[todoListID].map(t => t.id === id ? { ...t, isDone: isDone } : t)
-        });
+        dispathTasks(changeTaskStatusAC(id, isDone, todoListID))
     };
     function changeTaskTitle(id: string, newTitle: string, todoListID: string) {
-        setTasks({
-            ...tasks,
-            [todoListID]: tasks[todoListID].map(t => t.id === id ? { ...t, title: newTitle } : t)
-        });
+        dispathTasks(chageTaskTitleAC(id, newTitle, todoListID))
     };
 
     function getTasksForTodoList(todoList: TodoListType) {
@@ -99,26 +89,23 @@ function App() {
     };
 
     function removeTodoList(todoListID: string) {
-        let filterTodoList = todoLists.filter(tl => tl.id !== todoListID)
-        setTodoLists(filterTodoList);
-        delete tasks[todoListID];
-        setTasks({ ...tasks });
+        const action = removeTodoListAC(todoListID);
+        dispatchTodoLists(removeTodoListAC(todoListID));
+        dispathTasks(action);
     };
     function changeFilter(todoListID: string, value: FilterValueTpe) {
-        setTodoLists(todoLists.map(tl => tl.id === todoListID ? { ...tl, filter: value } : tl));
+        const action = changeTodoListFilterAC(todoListID, value);
+        dispatchTodoLists(action);
     };
     function changeTodoListTitle(todoListID: string, newTitle: string) {
-        setTodoLists(todoLists.map(tl => tl.id === todoListID ? { ...tl, title: newTitle } : tl));
+        const action = changeTodoListTitleAC(todoListID, newTitle);
+        dispatchTodoLists(action);
     };
     function addTodoList(title: string) {
-        const newTodoListID = v1();
-        const newTodoList: TodoListType = {
-            id: newTodoListID,
-            title: title,
-            filter: 'all'
-        };
-        setTodoLists([...todoLists, newTodoList]);
-        setTasks({ ...tasks, [newTodoListID]: [] });
+        const action = addTodoListAC(title);
+        dispathTasks(action);
+        dispatchTodoLists(action);
+
     };
 
     const todoListComponents = todoLists.map(tl => {
@@ -168,4 +155,3 @@ function App() {
     );
 }
 
-export default App;

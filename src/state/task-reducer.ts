@@ -2,7 +2,7 @@ import React from 'react'
 import { v1 } from 'uuid';
 import { TaskStateType } from '../App'
 import { TaskType } from '../TodoList';
-import { AddTodoListAT, add_todoList, RemoveTodoListAT, remove_todoList } from './TodoList-reducer';
+import { AddTodoListAT, add_todoList, RemoveTodoListAT, remove_todoList, todoListID_1, todoListID_2 } from './TodoList-reducer';
 
 const remove_tasks = 'REMOVE-TASKS';
 const add_task = 'ADD-TASK';
@@ -37,9 +37,26 @@ export type ActionUnionType = RemoveTasksAT
                             | ChangeTaskStatusAT
                             | AddTodoListAT
                             | RemoveTodoListAT
-                            
 
-export const tasksReducer = (tasks: TaskStateType, action: ActionUnionType): TaskStateType => {
+                            
+const initialState: TaskStateType = {
+    [todoListID_1]: [
+        { id: v1(), title: "HTML&CSS", isDone: true },
+        { id: v1(), title: "JS", isDone: true },
+        { id: v1(), title: "ReactJS", isDone: false },
+        { id: v1(), title: "Redax", isDone: true },
+    ],
+    [todoListID_2]: [
+        { id: v1(), title: "HTML&CSS", isDone: true },
+        { id: v1(), title: "JS", isDone: true },
+        { id: v1(), title: "ReactJS", isDone: false },
+        { id: v1(), title: "Redax", isDone: false },
+    ]
+};
+
+export type InitialStateType = typeof initialState
+
+export const tasksReducer = (tasks: InitialStateType = initialState, action: ActionUnionType): InitialStateType => {
     switch (action.type) {
         case remove_tasks:
             return {
@@ -79,7 +96,8 @@ export const tasksReducer = (tasks: TaskStateType, action: ActionUnionType): Tas
         default:
             return tasks
     }
-}
+};
+
 export const removeTasksAC = (id: string, todoListID: string): RemoveTasksAT => {
     return { type: remove_tasks, id, todoListID }
 };
