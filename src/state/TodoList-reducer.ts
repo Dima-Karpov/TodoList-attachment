@@ -47,7 +47,7 @@ const initialState: Array<TodoListType> = [
         title: 'What to buy',
         filter: 'all'
     },
-]
+];
 
 export type InitialStateTaskType = typeof initialState
 
@@ -69,7 +69,7 @@ export const todoListReduser = (todoLists: InitialStateTaskType = initialState, 
         default:
             return todoLists
     }
-}
+};
 
 export const removeTodoListAC = (todoListID: string): RemoveTodoListAT => {
     return { type: remove_todoList, todoListID }

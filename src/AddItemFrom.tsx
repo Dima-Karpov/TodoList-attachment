@@ -7,7 +7,7 @@ type AddItemPropsType = {
     addItem: (title: string) => void
 };
 
-export function AddItemFrom(props: AddItemPropsType) {
+export const AddItemFrom = React.memo( (props: AddItemPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -15,10 +15,12 @@ export function AddItemFrom(props: AddItemPropsType) {
     const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => { setNewTaskTitle(e.currentTarget.value) };
 
     const onKeyPressAddTasks = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error !== null) {
+            setError(null);
+        };
         if (e.key === 'Enter') {
             onClickAddTask()
-        }
+        };
     };
     const onClickAddTask = () => {
         if (newTaskTitle.trim() !== '') {
@@ -46,4 +48,4 @@ export function AddItemFrom(props: AddItemPropsType) {
             </IconButton>
         </div>
     )
-};
+});

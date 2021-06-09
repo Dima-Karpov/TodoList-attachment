@@ -8,7 +8,7 @@ const rootReduser = combineReducers({
     todoLists: todoListReduser,
 });
 
-// type AppRootState = {
+// type AppRootStateType = {
 //     todoLists: Array<TodoListType>
 //     tasks: TaskStateType
 // }
