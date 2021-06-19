@@ -13,13 +13,14 @@ type TaskPropsType = {
 };
 
 export const Task = React.memo((props: TaskPropsType) => {
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+
+    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         props.changeTaskStatus(props.task.id,
             e.currentTarget.checked,
             props.todoListID)
-    };
-    const removeTask = () => props.removeTasks(props.task.id, props.todoListID);
-    
+    }, [props.task.id, props.todoListID, props.changeTaskStatus]);
+    const removeTask = useCallback( () => props.removeTasks(props.task.id, props.todoListID),
+        [props.task.id, props.todoListID,  props.removeTasks]);
     const onChangeTaskTitle = useCallback((newTitle: string) => {
         props.changeTaskTitle(
             props.task.id,
@@ -29,7 +30,7 @@ export const Task = React.memo((props: TaskPropsType) => {
     }, [props.changeTaskTitle, props.task.id, props.todoListID]);
 
     return (
-        <li
+        <div
             key={props.task.id}
             className={props.task.isDone ? 'is-done' : ''}
         >
@@ -42,12 +43,11 @@ export const Task = React.memo((props: TaskPropsType) => {
                 title={props.task.title}
                 changeTitle={onChangeTaskTitle}
             />
-            {/* <button onClick={removeTask}>del</button> */}
             <IconButton onClick={removeTask} size="small" >
                 <DeleteIcon  />
             </IconButton>
 
 
-        </li>
+        </div>
     )
 });

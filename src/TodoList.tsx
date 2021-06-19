@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { AddItemFrom } from './AddItemFrom';
-import { Checkbox, IconButton } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { EditableSpan } from './EditableSpan';
@@ -29,7 +29,21 @@ export type PropsType = {
 }
 
 export const TodoList = React.memo( (props: PropsType) => {
-    const tasks = props.tasks.map(t => <Task
+
+    const getTasksForTodoList = () => {
+        switch (props.filter) {
+            case 'completed':
+                return props.tasks.filter(t => t.isDone)
+            case 'active':
+                return props.tasks.filter(t => t.isDone === false)
+            default:
+                return props.tasks
+        }
+    };
+
+    let newTasks = getTasksForTodoList();
+    
+    const tasks = newTasks.map(t => <Task
                                             task={t}
                                             todoListID={props.todoListID}
                                             changeTaskStatus={props.changeTaskStatus}
@@ -43,9 +57,10 @@ export const TodoList = React.memo( (props: PropsType) => {
     const onClickActiveFilter = useCallback( () => { props.changeFilter(props.todoListID, 'active') }, [props.changeFilter]);
     const onClickCompletedFilter = useCallback( () => { props.changeFilter(props.todoListID, 'completed') }, [props.changeFilter]);
 
-    const removeTodoList = () => {
+    const removeTodoList = useCallback(() => {
         props.removeTodoList(props.todoListID)
-    };
+    }, [props.removeTodoList]);
+
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.todoListID)
     }, [props.addTask, props.todoListID]);

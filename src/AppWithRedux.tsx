@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { v1 } from 'uuid';
 import { AddItemFrom } from './AddItemFrom';
 import './App.css';
 import { TaskType, TodoList } from './TodoList';
@@ -47,17 +46,6 @@ export function AppWithRedux() {
         dispatch(chageTaskTitleAC(id, newTitle, todoListID))
     }, [dispatch]);
 
-    const getTasksForTodoList = (todoList: TodoListType) => {
-        switch (todoList.filter) {
-            case 'completed':
-                return tasks[todoList.id].filter(t => t.isDone)
-            case 'active':
-                return tasks[todoList.id].filter(t => t.isDone === false)
-            default:
-                return tasks[todoList.id]
-        }
-    };
-
     const removeTodoList = useCallback( (todoListID: string) => {
         const action = removeTodoListAC(todoListID);
         dispatch(action);
@@ -82,7 +70,7 @@ export function AppWithRedux() {
                     <TodoList
                         todoListID={tl.id}
                         title={tl.title}
-                        tasks={getTasksForTodoList(tl)}
+                        tasks={tasks[tl.id]}
                         removeTasks={removeTasks}
                         changeFilter={changeFilter}
                         addTask={addTask}
