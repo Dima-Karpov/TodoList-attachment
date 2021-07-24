@@ -14,12 +14,12 @@ test('new array should be added when new todolist is added', () => {
             { id: "1", title: "bread", isDone: false },
             { id: "2", title: "milk", isDone: true },
             { id: "3", title: "tea", isDone: false }
-        ]
+        ],
     };
 
     const action = addTodoListAC("new todolist");
 
-    const endState = tasksReducer(startState, action)
+    const endState = tasksReducer(startState, action);
 
 
     const keys = Object.keys(endState);
@@ -38,8 +38,8 @@ test('ids should be equals', () => {
 
     const action = addTodoListAC("new todolist");
 
-    const endTasksState = tasksReducer(startTasksState, action)
-    const endTodolistsState = todoListReduser(startTodolistsState, action)
+    const endTasksState = tasksReducer(startTasksState, action);
+    const endTodolistsState = todoListReduser(startTodolistsState, action);
 
     const keys = Object.keys(endTasksState);
     const idFromTasks = keys[0];
@@ -53,18 +53,18 @@ test('property with todolistId should be deleted', () => {
         "todolistId1": [
             { id: "1", title: "CSS", isDone: false },
             { id: "2", title: "JS", isDone: true },
-            { id: "3", title: "React", isDone: false }
+            { id: "3", title: "React", isDone: false },
         ],
         "todolistId2": [
             { id: "1", title: "bread", isDone: false },
             { id: "2", title: "milk", isDone: true },
-            { id: "3", title: "tea", isDone: false }
-        ]
+            { id: "3", title: "tea", isDone: false },
+        ],
     };
 
     const action = removeTodoListAC("todolistId2");
 
-    const endState = tasksReducer(startState, action)
+    const endState = tasksReducer(startState, action);
 
     const keys = Object.keys(endState);
 
