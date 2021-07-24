@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { todolistAPI } from '../../api/todolist-api';
+import { todolistAPI, UpdateTaskModelType } from '../../api/todolist-api';
 
 export default {
     title: 'API-TODOLIST'
@@ -50,6 +50,61 @@ export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         todolistAPI.updateTodolist(todolistId, 'React>>>>>> + JavaScript + Redux')
+            .then((res) => {
+                setState(res.data)
+            })
+    }, []);
+
+    return <div> {JSON.stringify(state)}</div>
+};
+
+export const GetTasks = () => {
+    const todolistId = 'a191b60f-1c75-42d3-80b8-2c9b49def38b';
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        todolistAPI.getTasks(todolistId)
+            .then((res) => {
+                setState(res.data)
+            })
+    }, []);
+
+    return <div> {JSON.stringify(state)}</div>
+};
+export const DeleteTask = () => {
+    const todolistId = '99dc65fa-91d0-42e5-99e4-206e8cd46663';
+    const taskId = '7afbca16-4e9d-4c80-857d-2d8fc1d22600';
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        todolistAPI.deleteTask(todolistId, taskId)
+            .then((res) => {
+                setState(res.data)
+            })
+    }, []);
+
+    return <div> {JSON.stringify(state)}</div>
+};
+export const CreateTask = () => {
+    const todolistId = '99dc65fa-91d0-42e5-99e4-206e8cd46663';
+    const taskTitle = 'HELLO !!!';
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+    todolistAPI.createTask(todolistId, taskTitle)
+            .then((res) => {
+                setState(res.data)
+            })
+    }, []);
+
+    return <div> {JSON.stringify(state)}</div>
+};
+export const UpdateTask = () => {
+    const todolistId = '6c10f74a-a09c-449d-855d-a775db0bd959';
+    const taskId = '7afbca16-4e9d-4c80-857d-2d8fc1d22600';
+
+    const model =  {};
+
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+    todolistAPI.updateTask(todolistId, taskId, model)
             .then((res) => {
                 setState(res.data)
             })
