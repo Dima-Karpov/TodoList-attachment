@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { AddItemFrom } from './AddItemFrom';
 import './App.css';
-import { TaskType, TodoList } from './TodoList';
+import { TodoList } from './TodoList';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,52 +9,62 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Container, Grid, Paper } from '@material-ui/core';
-import { addTodoListAC, changeTodoListFilterAC, changeTodoListTitleAC, InitialStateTaskType, removeTodoListAC } from './state/TodoList-reducer';
-import { removeTasksAC, addTaskAC, changeTaskStatusAC, chageTaskTitleAC, InitialStateType } from './state/task-reducer';
+import {
+    addTodoListAC, changeTodoListFilterAC, changeTodoListTitleAC,
+    fetchTodoListsTC, TodoListDomainType, removeTodoListAC,
+    FilterValuesType
+} from './state/TodoList-reducer';
+import {
+    removeTaskTC, updateTaskStatusTC, chageTaskTitleAC,
+    addTaskTC
+} from './state/task-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
+import { TaskStatuses, TaskType } from './api/todolist-api';
 
-export type FilterValueTpe = 'all' | 'active' | 'completed'
 
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterValueTpe
-};
+
 export type TaskStateType = {
     [key: string]: TaskType[]
 };
 
 export function AppWithRedux() {
 
-    const tasks = useSelector<AppRootStateType, InitialStateType>(state => state.tasks);
-    const todoLists = useSelector<AppRootStateType, InitialStateTaskType>(state => state.todoLists);
+    const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks);
+    const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
     const dispatch = useDispatch();
 
-    const removeTasks = useCallback( (id: string, todoListID: string) => {
-        dispatch(removeTasksAC(id, todoListID));
+    useEffect(() => {
+        dispatch(fetchTodoListsTC())
+    }, []);
+
+    const removeTasks = useCallback((id: string, todoListID: string ) => {
+        debugger
+        dispatch(removeTaskTC( id, todoListID));
     }, [dispatch]);
 
-    const addTask = useCallback( (title: string, todoListID: string) => {
-        dispatch(addTaskAC(title, todoListID));
+    const addTask = useCallback((todoListID: string, title: string) => {
+        dispatch(addTaskTC(todoListID, title));
     }, [dispatch]);
 
-    const changeStatus = useCallback( (id: string, isDone: boolean, todoListID: string) => {
-        dispatch(changeTaskStatusAC(id, isDone, todoListID))
+    const changeStatus = useCallback((id: string, todoListID: string, status: TaskStatuses ) => {
+        debugger
+        dispatch(updateTaskStatusTC(id, todoListID, status))
     }, [dispatch]);
-    const changeTaskTitle = useCallback( (id: string, newTitle: string, todoListID: string) => {
+
+    const changeTaskTitle = useCallback((id: string, newTitle: string, todoListID: string) => {
         dispatch(chageTaskTitleAC(id, newTitle, todoListID))
     }, [dispatch]);
 
-    const removeTodoList = useCallback( (todoListID: string) => {
+    const removeTodoList = useCallback((todoListID: string) => {
         const action = removeTodoListAC(todoListID);
         dispatch(action);
     }, [dispatch]);
-    const changeFilter = useCallback( (todoListID: string, value: FilterValueTpe) => {
+    const changeFilter = useCallback((todoListID: string, value: FilterValuesType) => {
         const action = changeTodoListFilterAC(todoListID, value);
         dispatch(action);
     }, [dispatch]);
-    const changeTodoListTitle = useCallback((todoListID: string, newTitle: string) =>  {
+    const changeTodoListTitle = useCallback((todoListID: string, newTitle: string) => {
         const action = changeTodoListTitleAC(todoListID, newTitle);
         dispatch(action);
     }, [dispatch]);
@@ -94,7 +104,7 @@ export function AppWithRedux() {
                     </IconButton>
                     <Typography variant="h6">
                         TodoList
-                </Typography>
+                    </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
@@ -109,4 +119,3 @@ export function AppWithRedux() {
         </div>
     );
 }
-

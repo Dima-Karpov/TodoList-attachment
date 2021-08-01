@@ -1,20 +1,28 @@
 import React from 'react'
 import { v1 } from 'uuid';
-import { FilterValueTpe, TodoListType } from '../App';
-import { ActionUnionType, addTodoListAC, changeTodoListFilterAC, changeTodoListTitleAC, removeTodoListAC, todoListReduser } from './TodoList-reducer';
+import { ActionUnionType, addTodoListAC, changeTodoListFilterAC, 
+        changeTodoListTitleAC, removeTodoListAC, setTodoListAC, 
+        todoListReduser } from './TodoList-reducer';
+
+
+ type FilterValuesType = "all" | "active" | "completed";
+// @ts-ignore
+ type TodoListDomainType = TodolistType & {
+    filter: FilterValuesType
+}
 
 let todoList1: string;
 let todoList2: string;
-let startState: Array<TodoListType>
+let startState: TodoListDomainType[]
 
-(() => {
+
     todoList1 = v1();
     todoList2 = v1();
-    startState = [
+
+     startState = [
         { id: todoList1, title: 'What to learn', filter: 'all' },
         { id: todoList2, title: 'What to buy', filter: 'all' }
     ];
-})
 
 test('correct todoList should be removed', () => {
     
@@ -54,7 +62,7 @@ test('correct todoList should change its name', () => {
 });
 test('correct filter of todoList should be change', () => {
    
-    let  newFilter: FilterValueTpe = 'completed';
+    let  newFilter: FilterValuesType = 'completed';
 
     const action: ActionUnionType = {
         type: 'CHANGE-TODOLIST-FILTER',
@@ -67,4 +75,13 @@ test('correct filter of todoList should be change', () => {
     expect(endState[1].title).toBe('What to buy');
     expect(endState[0].title).toBe('What to learn')
     expect(endState[1].filter).toBe(newFilter)
+})
+test('todolists should be set to the state', () => {
+   
+    const action = setTodoListAC(startState);
+
+    const endState = todoListReduser([], action);
+
+    expect(endState.length).toBe(2);
+   
 })

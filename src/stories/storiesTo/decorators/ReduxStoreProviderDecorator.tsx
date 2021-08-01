@@ -2,16 +2,38 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import { v1 } from 'uuid';
-import { AppRootStateType, store } from '../../../state/store';
 import { tasksReducer } from '../../../state/task-reducer';
+
 import { todoListReduser } from '../../../state/TodoList-reducer';
+
+type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+};
+type FilterValueTpe = 'all' | 'active' | 'completed';
+
+type TodoListType = {
+    id: string
+    title: string
+    filter: FilterValueTpe
+};
+
+type TaskStateType = {
+    [key: string]: TaskType[]
+};
+
+type AppRootStateType = {
+    todoLists: Array<TodoListType>
+    tasks: TaskStateType
+}
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todoLists: todoListReduser
  })
  
- const initialGlobalState = {
+ const initialGlobalState: AppRootStateType = {
     todoLists: [
         {id: "todolistId1", title: "What to learn", filter: "all"},
         {id: "todolistId2", title: "What to buy", filter: "all"}
@@ -27,6 +49,7 @@ const rootReducer = combineReducers({
         ]
     }
  };
+//@ts-ignore
  export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType);
  
  export const ReduxStoreProviderDecorator = (storyFn: any) => (

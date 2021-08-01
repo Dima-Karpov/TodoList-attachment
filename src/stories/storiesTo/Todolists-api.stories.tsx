@@ -100,10 +100,18 @@ export const UpdateTask = () => {
     const todolistId = '6c10f74a-a09c-449d-855d-a775db0bd959';
     const taskId = '7afbca16-4e9d-4c80-857d-2d8fc1d22600';
 
-    const model =  {};
-
     const [state, setState] = useState<any>(null)
     useEffect(() => {
+        
+        let model: UpdateTaskModelType = {
+            title: 'string',
+            description: 'string',
+            status: 1,
+            priority: 2,
+            startDate: 'string',
+            deadline: 'string',
+        }
+
     todolistAPI.updateTask(todolistId, taskId, model)
             .then((res) => {
                 setState(res.data)
