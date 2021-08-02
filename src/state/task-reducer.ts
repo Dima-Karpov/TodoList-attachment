@@ -64,9 +64,9 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
         case add_task: {
             const stateCopy = { ...state }
             const newTask = action.task
-            const tasks = stateCopy[newTask.todoListID]
+            const tasks = stateCopy[newTask.todoListId]
             const newTasks = [newTask, ...tasks]
-            stateCopy[newTask.todoListID] = newTasks
+            stateCopy[newTask.todoListId] = newTasks
             return stateCopy;
         }
         case update_task:
@@ -112,8 +112,8 @@ export const removeTasksAC = (id: string, todoListID: string): RemoveTasksAT => 
 export const addTaskAC = (task: TaskType): AddTaskAT => {
     return { type: add_task, task }
 };
-export const updateTaskAC = ( todoListID: string, id: string, model: UpdateDomainTaskModelType): ChangeTaskStatusAT => {
-    return { type: update_task, id, todoListID, model }
+export const updateTaskAC = (todoListID: string, id: string, model: UpdateDomainTaskModelType): ChangeTaskStatusAT => {
+    return { type: update_task, todoListID, id, model }
 };
 
 export const chageTaskTitleAC = (id: string, todoListID: string, title: string): ChangeTaskTilteAT => {
@@ -149,7 +149,7 @@ export const addTaskTC = (todoListID: string, title: string) => {
     }
 };
 
- type UpdateDomainTaskModelType = {
+type UpdateDomainTaskModelType = {
     title?: string
     description?: string
     status?: TaskStatuses
@@ -159,11 +159,12 @@ export const addTaskTC = (todoListID: string, title: string) => {
 };
 
 
-export const updateTaskTC = (taskId: string, todoListID: string, domainModel: UpdateDomainTaskModelType) => {
+export const updateTaskTC = (todoListID: string, taskId: string, domainModel: UpdateDomainTaskModelType) => {
     return (dispatch: Dispatch, getState: () => AppRootStateType) => {
         const state = getState();
+
         const task = state.tasks[todoListID].find(t => t.id === taskId);
-        if(!task){
+        if (!task) {
             console.warn('task not found in the state');
             return
         }
@@ -180,7 +181,7 @@ export const updateTaskTC = (taskId: string, todoListID: string, domainModel: Up
 
         todolistAPI.updateTask(todoListID, taskId, apiModel)
             .then((res) => {
-                dispatch(updateTaskAC( todoListID, taskId, domainModel))
+                dispatch(updateTaskAC(todoListID, taskId, domainModel))
             })
     }
 };

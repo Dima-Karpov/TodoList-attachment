@@ -44,12 +44,12 @@ export function AppWithRedux() {
         dispatch(addTaskTC(todoListID, title));
     }, [dispatch]);
 
-    const changeStatus = useCallback((id: string, todoListID: string, status: TaskStatuses ) => {
-        dispatch(updateTaskTC(id, todoListID, {status}))
+    const changeStatus = useCallback((todoListID: string, id: string,  status: TaskStatuses ) => {
+        dispatch(updateTaskTC(todoListID, id, {status}))
     }, [dispatch]);
 
-    const changeTaskTitle = useCallback(( todoListID: string, id: string, newTitle: string) => {
-        dispatch(updateTaskTC( todoListID, id, {title: newTitle}))
+    const changeTaskTitle = useCallback((todoListID: string,id: string,  newTitle: string) => {
+        dispatch(updateTaskTC(todoListID, id, {title: newTitle}))
     }, [dispatch]);
 
     const removeTodoList = useCallback((todoListID: string) => {

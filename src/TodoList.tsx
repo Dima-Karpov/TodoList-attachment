@@ -23,9 +23,9 @@ export type PropsType = {
     removeTodoList: (todoListID: string) => void
     changeTodoListTitle: (todoListID: string, newTitle: string) => void
 
-    changeTaskStatus: (id: string, todoListID: string, status: TaskStatuses) => void
+    changeTaskStatus: ( todoListID: string,id: string, status: TaskStatuses) => void
     removeTasks: (id: string, todoListID: string) => void
-    changeTaskTitle: (id: string, newTitle: string, todoListID: string) => void
+    changeTaskTitle: (todoListID: string, id: string, newTitle: string) => void
 }
 
 export const TodoList = React.memo( (props: PropsType) => {
