@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Container, Grid, Paper } from '@material-ui/core';
 import {
     addTodoListAC, changeTodoListFilterAC, changeTodoListTitleAC,
-    fetchTodoListsTC, TodoListDomainType, removeTodoListAC,
+    fetchTodoListsTC, TodoListDomainType, removeTodolistsTC,
     FilterValuesType
 } from './state/TodoList-reducer';
 import {
@@ -55,7 +55,7 @@ export function AppWithRedux() {
     }, [dispatch]);
 
     const removeTodoList = useCallback((todoListID: string) => {
-        const action = removeTodoListAC(todoListID);
+        const action = removeTodolistsTC(todoListID);
         dispatch(action);
     }, [dispatch]);
     const changeFilter = useCallback((todoListID: string, value: FilterValuesType) => {
