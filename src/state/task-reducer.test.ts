@@ -38,18 +38,31 @@ beforeEach(() => {
 //     });
 
 // });
-// test.skip('correct task should be added to correct array', () => {
+test('correct task should be added to correct array', () => {
     
-//     const action = addTaskAC('juce', 'todolistId2');
-//     const endState = tasksReducer(startState, action);
+    const action = addTaskAC({
+        todoListID: 'todolistId2',
+        title: 'juce',
+        status: TaskStatuses.New,
+        addedDate: '',
+        deadline: '',
+        description: '',
+        order: 0,
+        priority: 0,
+        startDate: '',
+        id: 'id exists',
+    })
 
-//     expect(endState['todolistId1'].length).toBe(3);
-//     expect(endState['todolistId2'].length).toBe(4);
-//     expect(endState['todolistId2'][0].id).toBeDefined();
-//     expect(endState['todolistId2'][0].title).toBe('juce');
-//     expect(endState['todolistId2'][0].isDone).toBe(false);
 
-// });
+    const endState = tasksReducer(startState, action);
+
+    expect(endState['todolistId1'].length).toBe(3);
+    expect(endState['todolistId2'].length).toBe(4);
+    expect(endState['todolistId2'][0].id).toBeDefined();
+    expect(endState['todolistId2'][0].title).toBe('juce');
+    expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New);
+
+});
 //  test.skip('status of specified task should be changed', () => {
    
 //      const action = changeTaskStatusAC('2', false, 'todolistId2');
