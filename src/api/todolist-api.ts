@@ -25,7 +25,7 @@ export enum TaskStatuses {
 export enum TaskPriorities {
     Low = 0,
     Middle = 1,
-    Hi = 2,
+    Hi = 2, 
     Urgently = 3,
     Later = 4,
 };
@@ -46,8 +46,8 @@ export type TaskType = {
 export type UpdateTaskModelType = {
     title: string
     description: string
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
 };
@@ -89,7 +89,7 @@ export const todolistAPI = {
     createTask(todoListID: string, title: string  ) {
         return instance.post<CommonResponseType<{ item: TaskType }>>(`todo-lists/${todoListID}/tasks`, { title });
     },
-    updateTask(taskId: string, todoListID: string, model: UpdateTaskModelType) {
+    updateTask( todoListID: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<CommonResponseType<TaskType>>(`todo-lists/${todoListID}/tasks/${taskId}`, model)
     }
 }

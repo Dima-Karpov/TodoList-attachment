@@ -17,7 +17,7 @@ export const Task = React.memo((props: TaskPropsType) => {
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked
         props.changeTaskStatus(props.task.id, props.todoListID, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New)
-    }, [props.task.id, props.todoListID]);
+    }, [props.task.id]);
 
     const removeTask = useCallback(() => props.removeTasks(props.task.id, props.todoListID),
         [props.task.id, props.todoListID, props.removeTasks]);
