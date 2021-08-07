@@ -21,6 +21,7 @@ import { AppRootStateType } from '../state/store';
 import { TaskStatuses, TaskType } from '../api/todolist-api';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { RequestStatusType } from '../state/app-reducer';
+import { ErrorSnacbar } from '../components/ErrorSnackbar/ErrorSnackbar';
 
 
 
@@ -92,6 +93,7 @@ export function AppWithRedux() {
     return (
         <div className="App">
             <AppBar position="static">
+                <ErrorSnacbar/>
                 <Toolbar style={{ justifyContent: 'space-between' }}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuIcon />
@@ -102,7 +104,6 @@ export function AppWithRedux() {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
                 {status === 'loading' && <LinearProgress />}
-
             </AppBar>
             <Container>
                 <Grid container style={{ padding: '20px 0px' }}>

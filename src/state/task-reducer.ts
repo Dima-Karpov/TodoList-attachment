@@ -109,9 +109,11 @@ export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: D
         })
 };
 export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispatch) => {
+    dispatch(setStatus('loading'))
     todolistAPI.createTask(todoListID, title)
         .then((res) => {
             dispatch(addTaskAC(res.data.data.item))
+            dispatch(setStatus('succeeded'))
         })
 };
 
