@@ -5,7 +5,7 @@ const initialState = {
 };
 type InitialStateType = typeof initialState;
 
-type ActionsType = any;
+type ActionsType = SetStatusAT;
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type){
@@ -16,4 +16,5 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
     }
 };
 
-
+export const setStatus = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const);
+export type SetStatusAT = ReturnType<typeof setStatus>

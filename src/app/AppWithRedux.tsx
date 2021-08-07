@@ -15,19 +15,18 @@ import {
     FilterValuesType
 } from '../state/TodoList-reducer';
 import {
-    removeTaskTC, updateTaskTC, addTaskTC } from '../state/task-reducer';
+    removeTaskTC, updateTaskTC, addTaskTC, TaskStateType } from '../state/task-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../state/store';
 import { TaskStatuses, TaskType } from '../api/todolist-api';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { RequestStatusType } from '../state/app-reducer';
 
 
-
-export type TaskStateType = {
-    [key: string]: TaskType[]
-};
 
 export function AppWithRedux() {
+
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
 
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks);
     const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
@@ -102,7 +101,7 @@ export function AppWithRedux() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
-                <LinearProgress />
+                {status === 'loading' && <LinearProgress />}
 
             </AppBar>
             <Container>

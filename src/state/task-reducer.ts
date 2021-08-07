@@ -5,8 +5,12 @@ import {
 } from './TodoList-reducer';
 import { Dispatch } from 'redux';
 import { TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType } from '../api/todolist-api';
-import { TaskStateType } from '../app/AppWithRedux';
 import { AppRootStateType } from './store';
+import { setStatus, SetStatusAT } from './app-reducer';
+
+export type TaskStateType = {
+    [key: string]: TaskType[]
+};
 
 export type ActionUnionType = ReturnType<typeof removeTasksAC>
     | ReturnType<typeof addTaskAC>
@@ -16,6 +20,7 @@ export type ActionUnionType = ReturnType<typeof removeTasksAC>
     | RemoveTodoListAT
     | SetTodoListAT
     | ReturnType<typeof setTasksAC>
+    | SetStatusAT
 
 const initialState: TaskStateType = {};
 
@@ -86,17 +91,21 @@ export const setTasksAC = (tasks: Array<TaskType>, todoListID: string) =>
 // thunk
 
 export const fetchTasksTC = (todoListID: string) => (dispatch: Dispatch) => {
+    dispatch(setStatus('loading'))
     todolistAPI.getTasks(todoListID)
         .then((res) => {
             const tasks = res.data.items;
             dispatch(setTasksAC(tasks, todoListID))
+            dispatch(setStatus('succeeded'))
         })
 };
 
 export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: Dispatch) => {
+    dispatch(setStatus('loading'))
     todolistAPI.deleteTask(taskId, todoListID)
         .then((res) => {
             dispatch(removeTasksAC(taskId, todoListID))
+            dispatch(setStatus('succeeded'))
         })
 };
 export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispatch) => {
@@ -133,10 +142,11 @@ export const updateTaskTC = (todoListID: string, taskId: string, domainModel: Up
             deadline: task.deadline,
             ...domainModel
         }
-
+        dispatch(setStatus('loading'))
         todolistAPI.updateTask(todoListID, taskId, apiModel)
             .then((res) => {
                 dispatch(updateTaskAC(todoListID, taskId, domainModel))
+                dispatch(setStatus('succeeded'))
             })
     };
 
