@@ -7,6 +7,7 @@ import { Dispatch } from 'redux';
 import { TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType } from '../api/todolist-api';
 import { AppRootStateType } from './store';
 import { setError, setStatus, SetStatusAT, SetErrorAT } from './app-reducer';
+import { AxiosError } from 'axios';
 
 export type TaskStateType = {
     [key: string]: TaskType[]
@@ -99,6 +100,10 @@ export const fetchTasksTC = (todoListID: string) => (dispatch: Dispatch) => {
             dispatch(setTasksAC(tasks, todoListID))
             dispatch(setStatus('succeeded'))
         })
+        .catch((error: AxiosError) => {
+            dispatch(setStatus('failed'))
+            dispatch(setError(error.message))
+        })
 };
 export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: Dispatch) => {
     dispatch(setStatus('loading'))
@@ -106,6 +111,10 @@ export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: D
         .then((res) => {
             dispatch(removeTasksAC(taskId, todoListID))
             dispatch(setStatus('succeeded'))
+        })
+        .catch((error: AxiosError) => {
+            dispatch(setStatus('failed'))
+            dispatch(setError(error.message))
         })
 };
 export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispatch) => {
@@ -121,8 +130,11 @@ export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispa
                 } else {
                     dispatch(setError('Error'))
                 }
-                dispatch(setStatus('succeeded'))
             }
+        })
+        .catch((error: AxiosError) => {
+            dispatch(setStatus('failed'))
+            dispatch(setError(error.message))
         })
 };
 
@@ -158,6 +170,10 @@ export const updateTaskTC = (todoListID: string, taskId: string, domainModel: Up
             .then((res) => {
                 dispatch(updateTaskAC(todoListID, taskId, domainModel))
                 dispatch(setStatus('succeeded'))
+            })
+            .catch((error: AxiosError) => {
+                dispatch(setStatus('failed'))
+                dispatch(setError(error.message))
             })
     };
 
