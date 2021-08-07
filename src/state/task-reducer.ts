@@ -5,10 +5,8 @@ import {
 } from './TodoList-reducer';
 import { Dispatch } from 'redux';
 import { TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType } from '../api/todolist-api';
-import { TaskStateType } from '../AppWithRedux';
+import { TaskStateType } from '../app/AppWithRedux';
 import { AppRootStateType } from './store';
-
-
 
 export type ActionUnionType = ReturnType<typeof removeTasksAC>
     | ReturnType<typeof addTaskAC>
@@ -19,9 +17,7 @@ export type ActionUnionType = ReturnType<typeof removeTasksAC>
     | SetTodoListAT
     | ReturnType<typeof setTasksAC>
 
-
 const initialState: TaskStateType = {};
-
 
 export const tasksReducer = (state: TaskStateType = initialState, action: ActionUnionType): TaskStateType => {
     switch (action.type) {
@@ -31,7 +27,7 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
                 [action.todoListID]: state[action.todoListID].filter(t => t.id !== action.id)
             }
         case 'ADD-TASK': {
-            return {...state, [action.task.todoListId] : [action.task, ...state[action.task.todoListId]]}
+            return { ...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]] }
             // const stateCopy = { ...state }
             // const newTask = action.task
             // const tasks = stateCopy[newTask.todoListId]

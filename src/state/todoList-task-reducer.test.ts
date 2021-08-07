@@ -1,5 +1,5 @@
 import React from 'react'
-import { TaskStateType, TodoListType } from '../App';
+import { TaskStateType, TodoListType } from '../app/App';
 import { tasksReducer } from './task-reducer';
 import { addTodoListAC, removeTodoListAC, todoListReduser } from './TodoList-reducer';
 

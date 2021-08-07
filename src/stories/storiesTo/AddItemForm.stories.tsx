@@ -1,6 +1,6 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import { AddItemFrom, AddItemPropsType } from '../../AddItemFrom';
+import { AddItemFrom, AddItemPropsType } from '../../components/AddItemForm/AddItemFrom';
 import {action} from '@storybook/addon-actions'
 
 export default {

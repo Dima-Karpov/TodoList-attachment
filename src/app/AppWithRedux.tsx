@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
-import { AddItemFrom } from './AddItemFrom';
+import { AddItemFrom } from '../components/AddItemForm/AddItemFrom';
 import './App.css';
-import { TodoList } from './TodoList';
+import { TodoList } from '../components/features/Todolist/TodoList';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -13,12 +13,13 @@ import {
     addTodolistsTC, changeTodoListFilterAC, changeTodoListTitleTC,
     fetchTodoListsTC, TodoListDomainType, removeTodolistsTC,
     FilterValuesType
-} from './state/TodoList-reducer';
+} from '../state/TodoList-reducer';
 import {
-    removeTaskTC, updateTaskTC, addTaskTC } from './state/task-reducer';
+    removeTaskTC, updateTaskTC, addTaskTC } from '../state/task-reducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppRootStateType } from './state/store';
-import { TaskStatuses, TaskType } from './api/todolist-api';
+import { AppRootStateType } from '../state/store';
+import { TaskStatuses, TaskType } from '../api/todolist-api';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 
 
@@ -92,6 +93,7 @@ export function AppWithRedux() {
     return (
         <div className="App">
             <AppBar position="static">
+                <LinearProgress />
                 <Toolbar style={{ justifyContent: 'space-between' }}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuIcon />

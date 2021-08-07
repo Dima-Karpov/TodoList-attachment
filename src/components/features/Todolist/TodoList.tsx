@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
-import { AddItemFrom } from './AddItemFrom';
+import { AddItemFrom } from '../../AddItemForm/AddItemFrom';
 import { IconButton } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { EditableSpan } from './EditableSpan';
-import { Task } from './Task';
-import { fetchTasksTC } from './state/task-reducer';
+import { EditableSpan } from '../../EditableSpan/EditableSpan';
+import { Task } from './Task/Task';
+import { fetchTasksTC } from '../../../state/task-reducer';
 import { useDispatch } from 'react-redux';
-import { TaskType, TaskStatuses } from './api/todolist-api';
-import { FilterValuesType } from './state/TodoList-reducer';
+import { TaskType, TaskStatuses } from '../../../api/todolist-api';
+import { FilterValuesType } from '../../../state/TodoList-reducer';
 
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { TaskPriorities, TaskStatuses } from '../api/todolist-api';
-import { TaskStateType } from '../AppWithRedux';
+import { TaskStateType } from '../app/AppWithRedux';
 import { addTaskAC, chageTaskTitleAC,  removeTasksAC, setTasksAC, tasksReducer } from './task-reducer';
 import { setTodoListAC } from './TodoList-reducer';
 
