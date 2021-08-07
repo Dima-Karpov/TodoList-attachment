@@ -22,6 +22,7 @@ import { TaskStatuses, TaskType } from '../api/todolist-api';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { RequestStatusType } from '../state/app-reducer';
 import { ErrorSnacbar } from '../components/ErrorSnackbar/ErrorSnackbar';
+import { TodolistsList } from '../components/features/Todolist/TodolistsList';
 
 
 
@@ -29,72 +30,9 @@ export function AppWithRedux() {
 
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
 
-    const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks);
-    const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchTodoListsTC())
-    }, []);
-
-    const removeTasks = useCallback((id: string, todoListID: string) => {
-        dispatch(removeTaskTC(id, todoListID));
-    }, [dispatch]);
-
-    const addTask = useCallback((todoListID: string, title: string) => {
-        dispatch(addTaskTC(todoListID, title));
-    }, [dispatch]);
-
-    const changeStatus = useCallback((todoListID: string, id: string,  status: TaskStatuses ) => {
-        dispatch(updateTaskTC(todoListID, id, {status}))
-    }, [dispatch]);
-
-    const changeTaskTitle = useCallback((todoListID: string,id: string,  newTitle: string) => {
-        dispatch(updateTaskTC(todoListID, id, {title: newTitle}))
-    }, [dispatch]);
-
-    const removeTodoList = useCallback((todoListID: string) => {
-        const action = removeTodolistsTC(todoListID);
-        dispatch(action);
-    }, [dispatch]);
-    const changeFilter = useCallback((todoListID: string, value: FilterValuesType) => {
-        const action = changeTodoListFilterAC(todoListID, value);
-        dispatch(action);
-    }, [dispatch]);
-    const changeTodoListTitle = useCallback((todoListID: string, newTitle: string) => {
-        dispatch(changeTodoListTitleTC(todoListID, newTitle));
-    }, [dispatch]);
-    const addTodoList = useCallback((title: string) => {
-        dispatch(addTodolistsTC(title));
-    }, [dispatch]);
-
-    const todoListComponents = todoLists.map(tl => {
-        return (
-            <Grid item key={tl.id}>
-                <Paper elevation={3} style={{ padding: '10px' }}>
-                    <TodoList
-                        todoListID={tl.id}
-                        title={tl.title}
-                        tasks={tasks[tl.id]}
-                        removeTasks={removeTasks}
-                        changeFilter={changeFilter}
-                        addTask={addTask}
-                        changeTaskStatus={changeStatus}
-                        filter={tl.filter}
-                        removeTodoList={removeTodoList}
-                        changeTaskTitle={changeTaskTitle}
-                        changeTodoListTitle={changeTodoListTitle}
-                        entityStatus={tl.entityStatus}
-                    />
-                </Paper>
-            </Grid>
-        );
-    });
-
     return (
         <div className="App">
             <AppBar position="static">
-                <ErrorSnacbar/>
                 <Toolbar style={{ justifyContent: 'space-between' }}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuIcon />
@@ -106,14 +44,10 @@ export function AppWithRedux() {
                 </Toolbar>
                 {status === 'loading' && <LinearProgress />}
             </AppBar>
-            <Container>
-                <Grid container style={{ padding: '20px 0px' }}>
-                    <AddItemFrom addItem={addTodoList} />
-                </Grid>
-                <Grid container spacing={7}>
-                    {todoListComponents}
-                </Grid>
+            <Container fixed>
+                <TodolistsList />
             </Container>
-        </div>
+            <ErrorSnacbar/>
+        </div> 
     );
 }
