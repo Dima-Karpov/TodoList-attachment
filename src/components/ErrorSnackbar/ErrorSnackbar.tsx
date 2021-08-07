@@ -13,24 +13,24 @@ const Alert = (props: AlertProps) => {
 export const ErrorSnacbar = () => {
 
     const dispatch = useDispatch();
-    const error = useSelector<AppRootStateType, string | null>(state => state.app.error)    
-    
+    const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
+
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-        if(reason === 'clickaway'){
+        if (reason === 'clickaway') {
             return
         }
         dispatch(setError(null))
     };
 
-    return(
-        <Snackbar 
+    return (
+        <Snackbar
             open={error !== null}
             autoHideDuration={6000}
             onClose={handleClose}
         >
             <Alert onClose={handleClose} severity='error'>
-                This is a success message
-                </Alert>
+                {error}
+            </Alert>
         </Snackbar>
     )
 };
