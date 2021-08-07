@@ -7,7 +7,7 @@ import { appReducer } from "./app-reducer";
 const rootReduser = combineReducers({
     tasks: tasksReducer,
     todoLists: todoListReduser,
-    app: appReducer
+    app: appReducer,
 });
 
 // type AppRootStateType = {

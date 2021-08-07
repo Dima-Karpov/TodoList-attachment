@@ -93,7 +93,6 @@ export function AppWithRedux() {
     return (
         <div className="App">
             <AppBar position="static">
-                <LinearProgress />
                 <Toolbar style={{ justifyContent: 'space-between' }}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuIcon />
@@ -103,6 +102,8 @@ export function AppWithRedux() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                <LinearProgress />
+
             </AppBar>
             <Container>
                 <Grid container style={{ padding: '20px 0px' }}>
