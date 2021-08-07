@@ -45,9 +45,6 @@ export type ActionUnionType = RemoveTodoListAT
     | SetErrorAT
     | ChangeTodolistEntityStatusAT
 
-
-
-
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodoListDomainType = TodolistType & {
     filter: FilterValuesType
@@ -110,7 +107,6 @@ export const fetchTodoListsTC = () => (dispatch: Dispatch) => {
             dispatch(setError(error.message))
         })
 };
-
 export const removeTodolistsTC = (todoListID: string) => (dispatch: Dispatch) => {
     dispatch(setStatus('loading'))
     dispatch(changeTodolistEntityStatusAC(todoListID, 'loading'))
@@ -124,7 +120,6 @@ export const removeTodolistsTC = (todoListID: string) => (dispatch: Dispatch) =>
             dispatch(setError(error.message))
         })
 };
-
 export const addTodolistsTC = (title: string) => (dispatch: Dispatch) => {
     dispatch(setStatus('loading'))
     todolistAPI.createTodo(title)
