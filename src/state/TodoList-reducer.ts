@@ -146,8 +146,18 @@ export const changeTodoListTitleTC = (todoListID: string, title: string) => (dis
     dispatch(setStatus('loading'))
     todolistAPI.updateTodolist(todoListID, title)
         .then((res) => {
-            dispatch(changeTodoListTitleAC(todoListID, title))
-            dispatch(setStatus('succeeded'))
+            if (res.data.resultCode === 0) {
+                dispatch(changeTodoListTitleAC(todoListID, title))
+                dispatch(setStatus('succeeded'))
+            } else {
+                if (res.data.messages.length) {
+                    dispatch(setError(res.data.messages[0]))
+                } else {
+                    dispatch(setError('Error'))
+                }
+                dispatch(setStatus('succeeded'))
+            }
+
         })
         .catch((error: AxiosError) => {
             dispatch(setStatus('failed'))

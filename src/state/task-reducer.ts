@@ -130,6 +130,7 @@ export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispa
                 } else {
                     dispatch(setError('Error'))
                 }
+                dispatch(setStatus('succeeded'))
             }
         })
         .catch((error: AxiosError) => {
@@ -156,6 +157,7 @@ export const updateTaskTC = (todoListID: string, taskId: string, domainModel: Up
             return
         }
 
+
         const apiModel: UpdateTaskModelType = {
             title: task.title,
             description: task.description,
@@ -168,8 +170,17 @@ export const updateTaskTC = (todoListID: string, taskId: string, domainModel: Up
         dispatch(setStatus('loading'))
         todolistAPI.updateTask(todoListID, taskId, apiModel)
             .then((res) => {
-                dispatch(updateTaskAC(todoListID, taskId, domainModel))
-                dispatch(setStatus('succeeded'))
+                if (res.data.resultCode === 0) {
+                    dispatch(updateTaskAC(todoListID, taskId, domainModel))
+                    dispatch(setStatus('succeeded'))
+                } else {
+                    if (res.data.messages.length) {
+                        dispatch(setError(res.data.messages[0]))
+                    } else {
+                        dispatch(setError('Error'))
+                    }
+                    dispatch(setStatus('succeeded'))
+                }
             })
             .catch((error: AxiosError) => {
                 dispatch(setStatus('failed'))
