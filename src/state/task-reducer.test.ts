@@ -1,7 +1,7 @@
 import React from 'react'
 import { TaskPriorities, TaskStatuses } from '../api/todolist-api';
 import { TaskStateType } from '../AppWithRedux';
-import { addTaskAC, chageTaskTitleAC, changeTaskStatusAC, removeTasksAC, setTasksAC, tasksReducer } from './task-reducer';
+import { addTaskAC, chageTaskTitleAC,  removeTasksAC, setTasksAC, tasksReducer } from './task-reducer';
 import { setTodoListAC } from './TodoList-reducer';
 
 let startState :TaskStateType = {}
@@ -41,7 +41,7 @@ beforeEach(() => {
 test('correct task should be added to correct array', () => {
     
     const action = addTaskAC({
-        todoListID: 'todolistId2',
+        todoListId: 'todolistId2',
         title: 'juce',
         status: TaskStatuses.New,
         addedDate: '',

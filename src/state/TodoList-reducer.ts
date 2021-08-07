@@ -1,5 +1,4 @@
 import React from 'react'
-import { v1 } from 'uuid';
 import { todolistAPI, TodolistType } from './../api/todolist-api';
 import { Dispatch } from 'redux';
 
@@ -53,8 +52,7 @@ export const todoListReduser = (todoLists: Array<TodoListDomainType> = initialSt
         case remove_todoList:
             return [...todoLists].filter(tl => tl.id !== action.todoListID)
         case add_todoList:{
-            const newTodolist: TodoListDomainType = {...action.todoList, filter: 'all'}
-            return [newTodolist, ...todoLists]
+            return [{...action.todoList, filter: 'all'}, ...todoLists]
         }
         case change_todoList_title:
             return [...todoLists].map(tl => tl.id === action.todoListID ? { ...tl, title: action.title } : tl)

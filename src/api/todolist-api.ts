@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React from 'react';
 
 export type CommonResponseType<T = {}> = {
     resultCode: number
@@ -7,21 +6,18 @@ export type CommonResponseType<T = {}> = {
     fieldError: Array<string>
     data: T
 };
-
 export type TodolistType = {
     id: string
     title: string
     addedDate: string
     order: number
 };
-
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
     Completed = 2,
     Draft = 3,
 };
-
 export enum TaskPriorities {
     Low = 0,
     Middle = 1,
@@ -29,7 +25,6 @@ export enum TaskPriorities {
     Urgently = 3,
     Later = 4,
 };
-
 export type TaskType = {
     description: string
     title: string
@@ -42,7 +37,6 @@ export type TaskType = {
     order: number
     addedDate: string
 };
-
 export type UpdateTaskModelType = {
     title: string
     description: string
@@ -51,7 +45,6 @@ export type UpdateTaskModelType = {
     startDate: string
     deadline: string
 };
-
 type GetTasksResponse = {
     error: string | null
     totalCount: number
