@@ -1,7 +1,7 @@
 import React from 'react'
 import { todolistAPI, TodolistType } from './../api/todolist-api';
 import { Dispatch } from 'redux';
-import { setError, SetErrorAT, setStatus, SetStatusAT, RequestStatusType } from './app-reducer';
+import { SetErrorAT, setStatus, SetStatusAT, RequestStatusType } from './app-reducer';
 import { AxiosError } from 'axios';
 import { handleServerNetworkError, hendleServerAppError } from '../utils/error-utils';
 
@@ -129,7 +129,6 @@ export const addTodolistsTC = (title: string) => (dispatch: Dispatch) => {
             } else {
                 hendleServerAppError(dispatch, res.data)
             }
-
         })
         .catch((error: AxiosError) => {
             handleServerNetworkError(dispatch, error.message)
@@ -145,7 +144,6 @@ export const changeTodoListTitleTC = (todoListID: string, title: string) => (dis
             } else {
                 hendleServerAppError(dispatch, res.data)
             }
-
         })
         .catch((error: AxiosError) => {
             handleServerNetworkError(dispatch, error.message)

@@ -6,7 +6,7 @@ import {
 import { Dispatch } from 'redux';
 import { TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType } from '../api/todolist-api';
 import { AppRootStateType } from './store';
-import { setError, setStatus, SetStatusAT, SetErrorAT } from './app-reducer';
+import { setStatus, SetStatusAT, SetErrorAT, RequestStatusType } from './app-reducer';
 import { AxiosError } from 'axios';
 import { handleServerNetworkError, hendleServerAppError } from '../utils/error-utils';
 
@@ -24,6 +24,7 @@ export type ActionUnionType = ReturnType<typeof removeTasksAC>
     | ReturnType<typeof setTasksAC>
     | SetStatusAT
     | SetErrorAT
+    | ReturnType<typeof changeTaskEntityStatusAC>
 
 const initialState: TaskStateType = {};
 
@@ -75,6 +76,11 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
             stateCopy[action.todoListID] = action.tasks
             return stateCopy
         }
+        case 'TASK/CHANGE-TASK-ENTITY-STATUS':
+            return {
+                ...state,
+                [action.todoListID]: state[action.todoListID].map(t => t.id === action.id ? { ...t, entityStatus: action.entityStatus } : t)
+            }
         default:
             return state
     }
@@ -90,6 +96,9 @@ export const chageTaskTitleAC = (id: string, todoListID: string, title: string) 
     ({ type: 'CHANGE-TASK-TITLE', id, todoListID, title } as const);
 export const setTasksAC = (tasks: Array<TaskType>, todoListID: string) =>
     ({ type: 'SET-TASKS', tasks, todoListID } as const);
+
+export const changeTaskEntityStatusAC = (id: string, todoListID: string, entityStatus: RequestStatusType) =>
+    ({ type: 'TASK/CHANGE-TASK-ENTITY-STATUS', id, todoListID,  entityStatus } as const)
 
 // thunk
 
@@ -107,6 +116,7 @@ export const fetchTasksTC = (todoListID: string) => (dispatch: Dispatch) => {
 };
 export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: Dispatch) => {
     dispatch(setStatus('loading'))
+    dispatch(changeTaskEntityStatusAC(taskId, todoListID, 'loading'))
     todolistAPI.deleteTask(taskId, todoListID)
         .then((res) => {
             dispatch(removeTasksAC(taskId, todoListID))
@@ -149,7 +159,6 @@ export const updateTaskTC = (todoListID: string, taskId: string, domainModel: Up
             console.warn('task not found in the state');
             return
         }
-
 
         const apiModel: UpdateTaskModelType = {
             title: task.title,

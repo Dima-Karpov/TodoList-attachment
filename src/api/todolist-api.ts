@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { RequestStatusType } from '../state/app-reducer';
 
 export type CommonResponseType<T = {}> = {
     resultCode: number
@@ -36,6 +37,7 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: string
+    entityStatus: RequestStatusType
 };
 export type UpdateTaskModelType = {
     title: string
