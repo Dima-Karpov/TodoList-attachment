@@ -8,7 +8,7 @@ import { TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelTyp
 import { AppRootStateType } from './store';
 import { setError, setStatus, SetStatusAT, SetErrorAT } from './app-reducer';
 import { AxiosError } from 'axios';
-import { hanldeServerNetworkError } from '../utils/error-utils';
+import { handleServerNetworkError, hendleServerAppError } from '../utils/error-utils';
 
 export type TaskStateType = {
     [key: string]: TaskType[]
@@ -102,7 +102,7 @@ export const fetchTasksTC = (todoListID: string) => (dispatch: Dispatch) => {
             dispatch(setStatus('succeeded'))
         })
         .catch((error: AxiosError) => {
-            hanldeServerNetworkError(dispatch, error.message)
+            handleServerNetworkError(dispatch, error.message)
         })
 };
 export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: Dispatch) => {
@@ -113,7 +113,7 @@ export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: D
             dispatch(setStatus('succeeded'))
         })
         .catch((error: AxiosError) => {
-            hanldeServerNetworkError(dispatch, error.message)
+            handleServerNetworkError(dispatch, error.message)
         })
 };
 export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispatch) => {
@@ -124,16 +124,11 @@ export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispa
                 dispatch(addTaskAC(res.data.data.item))
                 dispatch(setStatus('succeeded'))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setError(res.data.messages[0]))
-                } else {
-                    dispatch(setError('Error'))
-                }
-                dispatch(setStatus('succeeded'))
+                hendleServerAppError(dispatch, res.data)
             }
         })
         .catch((error: AxiosError) => {
-            hanldeServerNetworkError(dispatch, error.message)
+            handleServerNetworkError(dispatch, error.message)
         })
 };
 
@@ -172,16 +167,11 @@ export const updateTaskTC = (todoListID: string, taskId: string, domainModel: Up
                     dispatch(updateTaskAC(todoListID, taskId, domainModel))
                     dispatch(setStatus('succeeded'))
                 } else {
-                    if (res.data.messages.length) {
-                        dispatch(setError(res.data.messages[0]))
-                    } else {
-                        dispatch(setError('Error'))
-                    }
-                    dispatch(setStatus('succeeded'))
+                    hendleServerAppError(dispatch, res.data)
                 }
             })
             .catch((error: AxiosError) => {
-                hanldeServerNetworkError(dispatch, error.message)
+                handleServerNetworkError(dispatch, error.message)
             })
     };
 

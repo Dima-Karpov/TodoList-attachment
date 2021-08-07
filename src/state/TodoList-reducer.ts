@@ -3,7 +3,7 @@ import { todolistAPI, TodolistType } from './../api/todolist-api';
 import { Dispatch } from 'redux';
 import { setError, SetErrorAT, setStatus, SetStatusAT, RequestStatusType } from './app-reducer';
 import { AxiosError } from 'axios';
-import { hanldeServerNetworkError } from '../utils/error-utils';
+import { handleServerNetworkError, hendleServerAppError } from '../utils/error-utils';
 
 export const remove_todoList = 'REMOVE-TODOLIST';
 export const add_todoList = 'ADD-TODOLIST';
@@ -104,7 +104,7 @@ export const fetchTodoListsTC = () => (dispatch: Dispatch) => {
             dispatch(setStatus('succeeded'))
         })
         .catch((error: AxiosError) => {
-            hanldeServerNetworkError(dispatch, error.message)
+            handleServerNetworkError(dispatch, error.message)
         })
 };
 export const removeTodolistsTC = (todoListID: string) => (dispatch: Dispatch) => {
@@ -116,7 +116,7 @@ export const removeTodolistsTC = (todoListID: string) => (dispatch: Dispatch) =>
             dispatch(setStatus('succeeded'))
         })
         .catch((error: AxiosError) => {
-            hanldeServerNetworkError(dispatch, error.message)
+            handleServerNetworkError(dispatch, error.message)
         })
 };
 export const addTodolistsTC = (title: string) => (dispatch: Dispatch) => {
@@ -127,17 +127,12 @@ export const addTodolistsTC = (title: string) => (dispatch: Dispatch) => {
                 dispatch(addTodoListAC(res.data.data.item))
                 dispatch(setStatus('succeeded'))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setError(res.data.messages[0]))
-                } else {
-                    dispatch(setError('Some error occurred'))
-                }
-                dispatch(setStatus('failed'))
+                hendleServerAppError(dispatch, res.data)
             }
 
         })
         .catch((error: AxiosError) => {
-            hanldeServerNetworkError(dispatch, error.message)
+            handleServerNetworkError(dispatch, error.message)
         })
 };
 export const changeTodoListTitleTC = (todoListID: string, title: string) => (dispatch: Dispatch) => {
@@ -148,17 +143,12 @@ export const changeTodoListTitleTC = (todoListID: string, title: string) => (dis
                 dispatch(changeTodoListTitleAC(todoListID, title))
                 dispatch(setStatus('succeeded'))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setError(res.data.messages[0]))
-                } else {
-                    dispatch(setError('Error'))
-                }
-                dispatch(setStatus('succeeded'))
+                hendleServerAppError(dispatch, res.data)
             }
 
         })
         .catch((error: AxiosError) => {
-            hanldeServerNetworkError(dispatch, error.message)
+            handleServerNetworkError(dispatch, error.message)
         })
 };
 
