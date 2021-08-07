@@ -13,7 +13,7 @@ import { RequestStatusType } from '../../../state/app-reducer';
 
 
 
-export type PropsType = {
+type PropsType = {
     title: string
     tasks: Array<TaskType>
     filter: FilterValuesType

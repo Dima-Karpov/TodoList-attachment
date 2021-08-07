@@ -8,6 +8,7 @@ import { TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelTyp
 import { AppRootStateType } from './store';
 import { setError, setStatus, SetStatusAT, SetErrorAT } from './app-reducer';
 import { AxiosError } from 'axios';
+import { hanldeServerNetworkError } from '../utils/error-utils';
 
 export type TaskStateType = {
     [key: string]: TaskType[]
@@ -101,8 +102,7 @@ export const fetchTasksTC = (todoListID: string) => (dispatch: Dispatch) => {
             dispatch(setStatus('succeeded'))
         })
         .catch((error: AxiosError) => {
-            dispatch(setStatus('failed'))
-            dispatch(setError(error.message))
+            hanldeServerNetworkError(dispatch, error.message)
         })
 };
 export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: Dispatch) => {
@@ -113,8 +113,7 @@ export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: D
             dispatch(setStatus('succeeded'))
         })
         .catch((error: AxiosError) => {
-            dispatch(setStatus('failed'))
-            dispatch(setError(error.message))
+            hanldeServerNetworkError(dispatch, error.message)
         })
 };
 export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispatch) => {
@@ -134,8 +133,7 @@ export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispa
             }
         })
         .catch((error: AxiosError) => {
-            dispatch(setStatus('failed'))
-            dispatch(setError(error.message))
+            hanldeServerNetworkError(dispatch, error.message)
         })
 };
 
@@ -183,8 +181,7 @@ export const updateTaskTC = (todoListID: string, taskId: string, domainModel: Up
                 }
             })
             .catch((error: AxiosError) => {
-                dispatch(setStatus('failed'))
-                dispatch(setError(error.message))
+                hanldeServerNetworkError(dispatch, error.message)
             })
     };
 
