@@ -84,6 +84,7 @@ export function AppWithRedux() {
                         removeTodoList={removeTodoList}
                         changeTaskTitle={changeTaskTitle}
                         changeTodoListTitle={changeTodoListTitle}
+                        entityStatus={tl.entityStatus}
                     />
                 </Paper>
             </Grid>

@@ -6,7 +6,7 @@ import {
 import { Dispatch } from 'redux';
 import { TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType } from '../api/todolist-api';
 import { AppRootStateType } from './store';
-import { setError, setStatus, SetStatusAT } from './app-reducer';
+import { setError, setStatus, SetStatusAT, SetErrorAT } from './app-reducer';
 
 export type TaskStateType = {
     [key: string]: TaskType[]
@@ -21,6 +21,7 @@ export type ActionUnionType = ReturnType<typeof removeTasksAC>
     | SetTodoListAT
     | ReturnType<typeof setTasksAC>
     | SetStatusAT
+    | SetErrorAT
 
 const initialState: TaskStateType = {};
 
@@ -99,7 +100,6 @@ export const fetchTasksTC = (todoListID: string) => (dispatch: Dispatch) => {
             dispatch(setStatus('succeeded'))
         })
 };
-
 export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: Dispatch) => {
     dispatch(setStatus('loading'))
     todolistAPI.deleteTask(taskId, todoListID)
@@ -112,18 +112,17 @@ export const addTaskTC = (todoListID: string, title: string) => (dispatch: Dispa
     dispatch(setStatus('loading'))
     todolistAPI.createTask(todoListID, title)
         .then((res) => {
-            if(res.data.resultCode === 0){
+            if (res.data.resultCode === 0) {
                 dispatch(addTaskAC(res.data.data.item))
                 dispatch(setStatus('succeeded'))
-            } else{
-                if(res.data.messages.length){
+            } else {
+                if (res.data.messages.length) {
                     dispatch(setError(res.data.messages[0]))
                 } else {
                     dispatch(setError('Error'))
                 }
-                dispatch(setStatus('failed'))
+                dispatch(setStatus('succeeded'))
             }
-            
         })
 };
 
