@@ -61,7 +61,7 @@ export const TodolistsList: React.FC = React.memo(() => {
 
     return <>
         <Grid container style={{ padding: '20px' }}>
-            <AddItemFrom addItem={addTodoList} />
+            <AddItemFrom addItem={addTodoList}  />
         </Grid>
         <Grid container spacing={3}>
             {

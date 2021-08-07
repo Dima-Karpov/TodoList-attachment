@@ -2,12 +2,14 @@ import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { RequestStatusType } from '../../state/app-reducer';
 
 export type AddItemPropsType = {
     addItem: (title: string) => void
+    entityStatus?: RequestStatusType
 };
 
-export const AddItemFrom = React.memo( (props: AddItemPropsType) => {
+export const AddItemFrom = React.memo((props: AddItemPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -42,8 +44,13 @@ export const AddItemFrom = React.memo( (props: AddItemPropsType) => {
                 error={!!error}
                 helperText={error}
                 onBlur={() => setError(null)}
+                disabled={props.entityStatus === 'loading'}
             />
-            <IconButton onClick={onClickAddTask} color={'primary'} >
+            <IconButton
+                onClick={onClickAddTask}
+                color={'primary'}
+                disabled={props.entityStatus === 'loading'}
+            >
                 <AddIcon fontSize={'default'} />
             </IconButton>
         </div>

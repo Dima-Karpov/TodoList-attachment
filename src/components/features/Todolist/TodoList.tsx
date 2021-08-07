@@ -9,6 +9,7 @@ import { fetchTasksTC } from '../../../state/task-reducer';
 import { useDispatch } from 'react-redux';
 import { TaskType, TaskStatuses } from '../../../api/todolist-api';
 import { FilterValuesType } from '../../../state/TodoList-reducer';
+import { RequestStatusType } from '../../../state/app-reducer';
 
 
 
@@ -19,18 +20,18 @@ export type PropsType = {
     todoListID: string
 
     changeFilter: (todoListID: string, value: FilterValuesType) => void
-    addTask: (todoListID: string, title: string ) => void
+    addTask: (todoListID: string, title: string) => void
     removeTodoList: (todoListID: string) => void
     changeTodoListTitle: (todoListID: string, newTitle: string) => void
 
-    changeTaskStatus: ( todoListID: string,id: string, status: TaskStatuses) => void
+    changeTaskStatus: (todoListID: string, id: string, status: TaskStatuses) => void
     removeTasks: (id: string, todoListID: string) => void
     changeTaskTitle: (todoListID: string, id: string, newTitle: string) => void
 
-    entityStatus: string
+    entityStatus: RequestStatusType
 }
 
-export const TodoList = React.memo( (props: PropsType) => {
+export const TodoList = React.memo((props: PropsType) => {
 
     const dispatch = useDispatch();
 
@@ -50,27 +51,27 @@ export const TodoList = React.memo( (props: PropsType) => {
     };
 
     let newTasks = getTasksForTodoList();
-    
+
     const tasks = newTasks.map(t => <Task
-                                            task={t}
-                                            todoListID={props.todoListID}
-                                            changeTaskStatus={props.changeTaskStatus}
-                                            removeTasks={props.removeTasks}
-                                            changeTaskTitle={props.changeTaskTitle}
-                                            key={t.id}
+        task={t}
+        todoListID={props.todoListID}
+        changeTaskStatus={props.changeTaskStatus}
+        removeTasks={props.removeTasks}
+        changeTaskTitle={props.changeTaskTitle}
+        key={t.id}
 
     />);
 
-    const onClickAllFilter = useCallback( () => { props.changeFilter(props.todoListID, 'all') }, [props.changeFilter]);
-    const onClickActiveFilter = useCallback( () => { props.changeFilter(props.todoListID, 'active') }, [props.changeFilter]);
-    const onClickCompletedFilter = useCallback( () => { props.changeFilter(props.todoListID, 'completed') }, [props.changeFilter]);
+    const onClickAllFilter = useCallback(() => { props.changeFilter(props.todoListID, 'all') }, [props.changeFilter]);
+    const onClickActiveFilter = useCallback(() => { props.changeFilter(props.todoListID, 'active') }, [props.changeFilter]);
+    const onClickCompletedFilter = useCallback(() => { props.changeFilter(props.todoListID, 'completed') }, [props.changeFilter]);
 
     const removeTodoList = useCallback(() => {
         props.removeTodoList(props.todoListID)
     }, [props.removeTodoList, props.todoListID]);
 
     const addTask = useCallback((title: string) => {
-        props.addTask(props.todoListID, title )
+        props.addTask(props.todoListID, title)
     }, [props.addTask, props.todoListID]);
 
     const changeTodoListTitle = useCallback((newTitle: string) => {
@@ -80,15 +81,15 @@ export const TodoList = React.memo( (props: PropsType) => {
     return (
         <div>
             <h3>
-            <EditableSpan title={props.title} changeTitle={changeTodoListTitle}/>
+                <EditableSpan title={props.title} changeTitle={changeTodoListTitle} />
                 <IconButton onClick={removeTodoList} disabled={props.entityStatus === 'loading'}>
                     <DeleteIcon fontSize="small" />
                 </IconButton>
             </h3>
             <div>
-                <AddItemFrom addItem={addTask} />
+                <AddItemFrom addItem={addTask} entityStatus={props.entityStatus} />
             </div>
-            <ul style={{listStyle: 'none', paddingLeft:'0px'}}>
+            <ul style={{ listStyle: 'none', paddingLeft: '0px' }}>
                 {tasks}
             </ul>
             <div>
@@ -98,17 +99,17 @@ export const TodoList = React.memo( (props: PropsType) => {
                     onClick={onClickAllFilter}>
                     All</Button>
                 <Button
-                    style={{ marginLeft: "5px"}}
+                    style={{ marginLeft: "5px" }}
                     variant={props.filter === 'active' ? 'contained' : 'text'}
                     color={'primary'}
                     onClick={onClickActiveFilter}
-                    >Active</Button>
+                >Active</Button>
                 <Button
                     style={{ marginLeft: "5px" }}
                     variant={props.filter === 'completed' ? 'contained' : 'text'}
                     color={'primary'}
                     onClick={onClickCompletedFilter}
-                    >Completed</Button>
+                >Completed</Button>
             </div>
         </div>
     )
