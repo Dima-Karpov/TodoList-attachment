@@ -98,7 +98,7 @@ export const setTasksAC = (tasks: Array<TaskType>, todoListID: string) =>
     ({ type: 'SET-TASKS', tasks, todoListID } as const);
 
 export const changeTaskEntityStatusAC = (id: string, todoListID: string, entityStatus: RequestStatusType) =>
-    ({ type: 'TASK/CHANGE-TASK-ENTITY-STATUS', id, todoListID,  entityStatus } as const)
+    ({ type: 'TASK/CHANGE-TASK-ENTITY-STATUS', id, todoListID, entityStatus } as const)
 
 // thunk
 

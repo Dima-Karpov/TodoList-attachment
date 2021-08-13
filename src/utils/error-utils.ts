@@ -12,9 +12,9 @@ export const hendleServerAppError = <T>(dispatch: ErrorUtilsDispatchType, data: 
     dispatch(setStatus('failed'))
 }
 
-export const handleServerNetworkError = (dispatch: ErrorUtilsDispatchType,  message: string ) => {
+export const handleServerNetworkError = (dispatch: ErrorUtilsDispatchType, message: string) => {
     dispatch(setError(message))
     dispatch(setStatus('failed'))
 }
 
-type ErrorUtilsDispatchType = Dispatch<SetErrorAT | SetStatusAT >
+type ErrorUtilsDispatchType = Dispatch<SetErrorAT | SetStatusAT>
