@@ -2,6 +2,12 @@ import React from 'react';
 import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid } from '@material-ui/core';
 import { useFormik } from 'formik';
 
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
+
 export const Login = () => {
 
     const formik = useFormik({
@@ -13,6 +19,22 @@ export const Login = () => {
         onSubmit: values => {
             alert(JSON.stringify(values))
         },
+        validate: values => {
+            const errors: FormikErrorType = {};
+            if (!values.email) {
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address'
+            }
+
+            if (!values.password) {
+                errors.password = 'Required';
+            } else if (values.password.length < 2) {
+                errors.password = 'More than two characters must be entered';
+            }
+            return errors
+
+        }
     })
 
     return <Grid container justify="center">
@@ -21,7 +43,7 @@ export const Login = () => {
                 <FormLabel>
                     <p>To log in get registered
                         <a href={'https://social-network.samuraijs.com/'}
-                            target={'_blank'}>here
+                            target={'_blank'}> here
                         </a>
                     </p>
                     <p>or use common test account credentials:</p>
@@ -38,6 +60,7 @@ export const Login = () => {
                             value={formik.values.email}
                             onChange={formik.handleChange}
                         />
+                        {formik.errors.email && <div style={{ color: 'red' }}>{formik.errors.email}</div>}
                         <TextField
                             type="password"
                             label="Password"
@@ -47,11 +70,12 @@ export const Login = () => {
                             value={formik.values.password}
                             onChange={formik.handleChange}
                         />
+                        {formik.errors.password && <div style={{ color: 'red' }}>{formik.errors.password}</div>}
                         <FormControlLabel
                             label={'Remember me'}
                             control={
                                 <Checkbox
-                                
+
                                     name='rememberMe'
                                     checked={formik.values.rememberMe}
                                     onChange={formik.handleChange}
