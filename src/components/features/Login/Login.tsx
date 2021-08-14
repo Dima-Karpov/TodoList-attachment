@@ -10,9 +10,9 @@ export const Login = () => {
             password: '',
             rememberMe: false,
         },
-        onSumbit: values => {
+        onSubmit: values => {
             alert(JSON.stringify(values))
-        }
+        },
     })
 
     return <Grid container justify="center">
@@ -28,20 +28,35 @@ export const Login = () => {
                     <p>Email: free@samuraijs.com</p>
                     <p>Password: free</p>
                 </FormLabel>
-                <form onSubmit={formik.hendleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
                     <FormGroup>
                         <TextField
                             label="Email"
                             margin="normal"
+
+                            name='email'
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
                         />
                         <TextField
                             type="password"
                             label="Password"
                             margin="normal"
+
+                            name='password'
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
                         />
                         <FormControlLabel
                             label={'Remember me'}
-                            control={<Checkbox />}
+                            control={
+                                <Checkbox
+                                
+                                    name='rememberMe'
+                                    checked={formik.values.rememberMe}
+                                    onChange={formik.handleChange}
+
+                                />}
                         />
                         <Button type={'submit'} variant={'contained'} color={'primary'}>Login</Button>
                     </FormGroup>
