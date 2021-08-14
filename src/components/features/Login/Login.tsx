@@ -55,22 +55,24 @@ export const Login = () => {
                         <TextField
                             label="Email"
                             margin="normal"
+                            onBlur={formik.handleBlur}
 
                             name='email'
                             value={formik.values.email}
                             onChange={formik.handleChange}
                         />
-                        {formik.errors.email && <div style={{ color: 'red' }}>{formik.errors.email}</div>}
+                        {formik.touched.email && formik.errors.email && <div style={{ color: 'red' }}>{formik.errors.email}</div>}
                         <TextField
                             type="password"
                             label="Password"
                             margin="normal"
+                            onBlur={formik.handleBlur}
 
                             name='password'
                             value={formik.values.password}
                             onChange={formik.handleChange}
                         />
-                        {formik.errors.password && <div style={{ color: 'red' }}>{formik.errors.password}</div>}
+                        {formik.touched.password && formik.errors.password && <div style={{ color: 'red' }}>{formik.errors.password}</div>}
                         <FormControlLabel
                             label={'Remember me'}
                             control={
