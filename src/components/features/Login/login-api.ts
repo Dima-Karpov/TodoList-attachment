@@ -1,10 +1,10 @@
 import { CommonResponseType, instance } from "../../../api/todolist-api"
 
-type LoginParamsType = {
+ export type LoginParamsType = {
     email: string
     password: string
     rememberMe: boolean
-    captcha: string
+    captcha?: string
 }
 
 export const authAPI = {
