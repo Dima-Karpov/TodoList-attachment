@@ -6,10 +6,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { EditableSpan } from '../../EditableSpan/EditableSpan';
 import { Task } from './Task/Task';
 import { fetchTasksTC } from '../../../state/task-reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TaskType, TaskStatuses } from '../../../api/todolist-api';
 import { FilterValuesType } from '../../../state/TodoList-reducer';
 import { RequestStatusType } from '../../../state/app-reducer';
+import { AppRootStateType } from '../../../state/store';
 
 
 
@@ -34,8 +35,12 @@ type PropsType = {
 export const TodoList = React.memo((props: PropsType) => {
 
     const dispatch = useDispatch();
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
+        if(!isLoggedIn){
+            return;
+        }
         dispatch(fetchTasksTC(props.todoListID))
     }, [])
 

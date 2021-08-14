@@ -22,10 +22,13 @@ export const TodolistsList: React.FC = React.memo(() => {
 
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks);
     const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if(!isLoggedIn){
+            return;
+        }
         dispatch(fetchTodoListsTC())
     }, []);
 
