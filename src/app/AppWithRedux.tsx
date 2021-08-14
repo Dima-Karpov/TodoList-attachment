@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { AddItemFrom } from '../components/AddItemForm/AddItemFrom';
 import './App.css';
-import { TodoList } from '../components/features/Todolist/TodoList';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,12 +9,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Container } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../state/store';
-import { TaskStatuses, TaskType } from '../api/todolist-api';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { RequestStatusType } from '../state/app-reducer';
 import { ErrorSnacbar } from '../components/ErrorSnackbar/ErrorSnackbar';
 import { TodolistsList } from '../components/features/Todolist/TodolistsList';
-import { BrowserRouter, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { Login } from './../components/features/Login/Login';
 
 
@@ -45,7 +42,7 @@ export function AppWithRedux() {
                     <Switch>
                         <Route exact path={'/'} render={() => <TodolistsList />} />
                         <Route path={'/login'} render={() => <Login />} />
-                        <Route path={'/404'} render={() => <h1 style={{ fontSize: '50px', textAling: 'center' }}>404: PAGE NOT FOUND</h1>} />
+                        <Route path={'/404'} render={() => <h1 style={{fontSize: '50px', textAlign: 'center'}}>404: PAGE NOT FOUND</h1>} />
                         <Redirect from={'*'} to={'/404'} />
                     </Switch>
 
