@@ -17,6 +17,7 @@ import { TodolistsList } from '../components/features/Todolist/TodolistsList';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { Login } from './../components/features/Login/Login';
 import { initializeAppTC } from '../state/app-reducer';
+import { LogoutTC } from '../components/features/Login/auth-reducer';
 
 
 
@@ -25,6 +26,11 @@ export function AppWithRedux() {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
     const dispatch = useDispatch();
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized);
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
+
+    const logoutHandler = () => {
+        dispatch(LogoutTC())
+    };
 
     useEffect(() => {
         dispatch(initializeAppTC())
@@ -48,7 +54,7 @@ export function AppWithRedux() {
                         <Typography variant="h6">
                             TodoList
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        {isLoggedIn && <Button onClick={logoutHandler} color="inherit">Log out</Button>}
                     </Toolbar>
                     {status === 'loading' && <LinearProgress />}
                 </AppBar>

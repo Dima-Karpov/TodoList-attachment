@@ -34,6 +34,7 @@ export type SetTodoListAT = {
     type: typeof set_todoList
     todoLists: Array<TodolistType>
 }
+export type ClearDeletType = ReturnType<typeof clearDeletAC>
 
 type ChangeTodolistEntityStatusAT = ReturnType<typeof changeTodolistEntityStatusAC>
 
@@ -93,6 +94,7 @@ export const setTodoListAC = (todoLists: Array<TodolistType>): SetTodoListAT => 
 };
 export const changeTodolistEntityStatusAC = (todoListID: string, entityStatus: RequestStatusType) =>
     ({ type: change_todolist_entity_status, todoListID, entityStatus } as const)
+export const clearDeletAC = () => ({ type: 'TODOLIST/CLEAR-DELETE' } as const)
 
 
 

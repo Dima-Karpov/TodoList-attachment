@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux'
 import { SetStatusAT, SetErrorAT, setStatus } from '../../../state/app-reducer'
+import { clearDeletAC, ClearDeletType } from '../../../state/TodoList-reducer'
 import { handleServerNetworkError, hendleServerAppError } from '../../../utils/error-utils'
 import { authAPI, LoginParamsType } from './login-api'
 
@@ -20,6 +21,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 export const setIsLoggedInAC = (value: boolean) =>
     ({ type: 'login/SET-IS-LOGGED-IN', value } as const)
 
+
 // thunks
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setStatus('loading'))
@@ -37,5 +39,25 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsTyp
         })
 }
 
+export const LogoutTC = () => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setStatus('loading'))
+    authAPI.logout()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(setStatus('succeeded'))
+                dispatch(clearDeletAC())
+            } else {
+                hendleServerAppError(dispatch, res.data)
+            }
+        })
+        .catch(error => {
+            handleServerNetworkError(dispatch, error)
+        })
+}
+
 // types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetStatusAT | SetErrorAT
+type ActionsType = ReturnType<typeof setIsLoggedInAC>
+    | SetStatusAT
+    | SetErrorAT
+    | ClearDeletType
