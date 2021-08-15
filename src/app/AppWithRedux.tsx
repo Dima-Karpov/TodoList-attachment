@@ -15,12 +15,18 @@ import { ErrorSnacbar } from '../components/ErrorSnackbar/ErrorSnackbar';
 import { TodolistsList } from '../components/features/Todolist/TodolistsList';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { Login } from './../components/features/Login/Login';
+import {initializeAppTC} from '../state/app-reducer';
 
 
 
 export function AppWithRedux() {
 
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(initializeAppTC())
+    }, [dispatch])
 
     return (
         <BrowserRouter>
