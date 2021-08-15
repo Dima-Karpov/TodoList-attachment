@@ -37,13 +37,13 @@ export const TodoList = React.memo((props: PropsType) => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
-    useEffect(() => {
+    // useEffect(() => {
         
-        if(!isLoggedIn){
-            return;
-        }
-        dispatch(fetchTasksTC(props.todoListID))
-    }, [])
+    //     if(!isLoggedIn){
+    //         return;
+    //     }
+    //     dispatch(fetchTasksTC(props.todoListID))
+    // }, [])
 
     const getTasksForTodoList = () => {
         switch (props.filter) {

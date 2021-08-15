@@ -1,6 +1,6 @@
 import { setIsLoggedInAC } from "../components/features/Login/auth-reducer";
 import { authAPI } from "../components/features/Login/login-api";
-import {Dispatch} from 'redux'
+import { Dispatch } from 'redux'
 
 export type RequestStatusType = 'loading' | 'idle' | 'succeeded' | 'failed';
 const initialState = {
@@ -21,7 +21,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
         case 'APP/SET-ERROR':
             return { ...state, error: action.error }
         case 'APP/SET-INITIALIZED':
-            return {...state, isInitialized: action.isInitialized}
+            return { ...state, isInitialized: action.isInitialized }
         default:
             return state
     }
@@ -33,7 +33,7 @@ export type SetStatusAT = ReturnType<typeof setStatus>
 export const setError = (error: string | null) => ({ type: 'APP/SET-ERROR', error } as const);
 export type SetErrorAT = ReturnType<typeof setError>
 
-export const setInitialized = (isInitialized: boolean) => ({type: 'APP/SET-INITIALIZED', isInitialized} as const);
+export const setInitialized = (isInitialized: boolean) => ({ type: 'APP/SET-INITIALIZED', isInitialized } as const);
 export type SetInitialized = ReturnType<typeof setInitialized>
 
 
@@ -46,8 +46,7 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         } else {
         }
     })
-    .finally(() => {
-        dispatch(setInitialized(true));
-    })
- }
- 
+        .finally(() => {
+            dispatch(setInitialized(true));
+        })
+}

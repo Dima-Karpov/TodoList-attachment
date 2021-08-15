@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     AddTodoListAT, add_todoList, RemoveTodoListAT, SetTodoListAT,
-    remove_todoList, set_todoList
+    remove_todoList, set_todoList, ClearDeletType
 } from './TodoList-reducer';
 import { Dispatch } from 'redux';
 import { TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType } from '../api/todolist-api';
@@ -25,6 +25,7 @@ export type ActionUnionType = ReturnType<typeof removeTasksAC>
     | SetStatusAT
     | SetErrorAT
     | ReturnType<typeof changeTaskEntityStatusAC>
+    | ClearDeletType
 
 const initialState: TaskStateType = {};
 
@@ -81,6 +82,8 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
                 ...state,
                 [action.todoListID]: state[action.todoListID].map(t => t.id === action.id ? { ...t, entityStatus: action.entityStatus } : t)
             }
+        case 'TODOLIST/CLEAR-DELETE':
+            return {}
         default:
             return state
     }

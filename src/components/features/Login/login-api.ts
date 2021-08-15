@@ -1,6 +1,6 @@
 import { CommonResponseType, instance } from "../../../api/todolist-api"
 
- export type LoginParamsType = {
+export type LoginParamsType = {
     email: string
     password: string
     rememberMe: boolean
@@ -15,12 +15,12 @@ export type ResponseMeType = {
 
 export const authAPI = {
     login(data: LoginParamsType) {
-        return instance.post<CommonResponseType<{userId: number}>>('/auth/login', data)
+        return instance.post<CommonResponseType<{ userId: number }>>('/auth/login', data)
     },
-    me(){
+    me() {
         return instance.get<CommonResponseType<ResponseMeType>>('/auth/me')
     },
-    logout(){
+    logout() {
         return instance.delete<CommonResponseType>('/auth/login')
     }
 }

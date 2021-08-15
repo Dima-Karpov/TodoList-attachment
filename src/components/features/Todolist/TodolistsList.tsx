@@ -26,8 +26,8 @@ export const TodolistsList: React.FC = React.memo(() => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        
-        if(!isLoggedIn){
+
+        if (!isLoggedIn) {
             return;
         }
         dispatch(fetchTodoListsTC())
@@ -65,13 +65,13 @@ export const TodolistsList: React.FC = React.memo(() => {
     }, [dispatch]);
 
 
-    if(!isLoggedIn) {
-        return <Redirect to={'/login'}/>
+    if (!isLoggedIn) {
+        return <Redirect to={'/login'} />
     }
 
     return <>
         <Grid container style={{ padding: '20px' }}>
-            <AddItemFrom addItem={addTodoList}  />
+            <AddItemFrom addItem={addTodoList} />
         </Grid>
         <Grid container spacing={3}>
             {
