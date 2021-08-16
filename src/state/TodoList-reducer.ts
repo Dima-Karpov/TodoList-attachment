@@ -102,8 +102,6 @@ export const changeTodolistEntityStatusAC = (todoListID: string, entityStatus: R
     ({ type: change_todolist_entity_status, todoListID, entityStatus } as const)
 export const clearDeletAC = () => ({ type: 'TODOLIST/CLEAR-DELETE' } as const)
 
-
-
 export const fetchTodoListsTC = () => (dispatch: ThunkDispatch | any) => {
     dispatch(setStatus('loading'))
     todolistAPI.getTodos()
