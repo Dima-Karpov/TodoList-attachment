@@ -120,7 +120,7 @@ export const fetchTasksTC = (todoListID: string) => (dispatch: Dispatch) => {
 export const removeTaskTC = (taskId: string, todoListID: string) => (dispatch: Dispatch) => {
     dispatch(setStatus('loading'))
     dispatch(changeTaskEntityStatusAC(taskId, todoListID, 'loading'))
-    todolistAPI.deleteTask(taskId, todoListID)
+    todolistAPI.deletTask(taskId, todoListID)
         .then((res) => {
             dispatch(removeTasksAC(taskId, todoListID))
             dispatch(setStatus('succeeded'))
