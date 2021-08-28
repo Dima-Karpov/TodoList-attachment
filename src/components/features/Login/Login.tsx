@@ -12,7 +12,7 @@ type FormikErrorType = {
     rememberMe?: boolean
 }
 
-export const Login = () => {
+export const Login: React.FC<FormikErrorType> = React.memo(() => {
 
     const dispatch = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
@@ -96,4 +96,4 @@ export const Login = () => {
             </FormControl>
         </Grid>
     </Grid>
-}
+});
