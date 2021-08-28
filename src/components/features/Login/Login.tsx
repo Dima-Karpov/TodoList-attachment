@@ -54,7 +54,7 @@ export const Login: React.FC<FormikErrorType> = React.memo(() => {
             <FormControl>
                 <FormLabel>
                     <p>To log in get registered
-                        <a href={'https://social-network.samuraijs.com/'}
+                        <a rel='noreferrer' href={'https://social-network.samuraijs.com/'}
                             target={'_blank'}> here
                         </a>
                     </p>

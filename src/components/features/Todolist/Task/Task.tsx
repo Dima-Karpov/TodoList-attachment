@@ -8,30 +8,30 @@ import { RequestStatusType } from '../../../../state/app-reducer';
 export type TaskPropsType = {
     task: TaskType
     todoListID: string
-    
-    changeTaskStatus: (todoListID: string,id: string, status: TaskStatuses) => void
+
+    changeTaskStatus: (todoListID: string, id: string, status: TaskStatuses) => void
     removeTasks: (id: string, todoListID: string) => void
     changeTaskTitle: (todoListID: string, id: string, newTitle: string) => void
 
     entityStatus: RequestStatusType
 };
 
-export const Task = React.memo((props: TaskPropsType) => {
+export const Task: React.FC<TaskPropsType> = React.memo((props) => {
 
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked
         props.changeTaskStatus(props.todoListID, props.task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New)
-    }, [props.task.id]);
+    }, [props]);
 
     const removeTask = useCallback(() => props.removeTasks(props.task.id, props.todoListID),
-        [props.task.id, props.todoListID, props.removeTasks]);
+        [props]);
     const onChangeTaskTitle = useCallback((newTitle: string) => {
         props.changeTaskTitle(
             props.todoListID,
             props.task.id,
             newTitle,
         )
-    }, [props.changeTaskTitle, props.task.id, props.todoListID]);
+    }, [props]);
 
     return (
         <div

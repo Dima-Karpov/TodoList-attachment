@@ -1,4 +1,3 @@
-import React from 'react';
 import { setError, SetErrorAT, setStatus, SetStatusAT } from '../state/app-reducer';
 import { Dispatch } from 'redux';
 import { CommonResponseType } from '../api/todolist-api';

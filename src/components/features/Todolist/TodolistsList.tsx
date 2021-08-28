@@ -31,7 +31,7 @@ export const TodolistsList: React.FC = React.memo(() => {
             return;
         }
         dispatch(fetchTodoListsTC())
-    }, [dispatch]);
+    }, [dispatch, isLoggedIn]);
 
     const removeTasks = useCallback((id: string, todoListID: string) => {
         dispatch(removeTaskTC(id, todoListID));
