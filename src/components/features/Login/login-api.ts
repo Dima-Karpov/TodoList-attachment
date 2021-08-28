@@ -22,5 +22,5 @@ export const authAPI = {
     },
     logout() {
         return instance.delete<CommonResponseType>('/auth/login')
-    }
+    },
 }

@@ -6,11 +6,11 @@ import { AppRootStateType } from '../../state/store';
 import { setError } from '../../state/app-reducer';
 
 
-const Alert = (props: AlertProps) => {
+const Alert = React.memo((props: AlertProps) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />
-};
+});
 
-export const ErrorSnacbar = () => {
+export const ErrorSnacbar: React.FC = React.memo(() => {
 
     const dispatch = useDispatch();
     const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
@@ -33,7 +33,7 @@ export const ErrorSnacbar = () => {
             </Alert>
         </Snackbar>
     )
-};
+});
 
 
 
