@@ -9,7 +9,11 @@ export type AddItemPropsType = {
     entityStatus?: RequestStatusType
 };
 
-export const AddItemFrom = React.memo((props: AddItemPropsType) => {
+export const AddItemFrom: React.FC<AddItemPropsType> = React.memo((props) => {
+    const {
+        addItem,
+        entityStatus,
+    } = props;
 
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -26,7 +30,7 @@ export const AddItemFrom = React.memo((props: AddItemPropsType) => {
     };
     const onClickAddTask = () => {
         if (newTaskTitle.trim() !== '') {
-            props.addItem(newTaskTitle.trim());
+            addItem(newTaskTitle.trim());
             setNewTaskTitle('')
         } else {
             setError('Title is required');
@@ -44,12 +48,12 @@ export const AddItemFrom = React.memo((props: AddItemPropsType) => {
                 error={!!error}
                 helperText={error}
                 onBlur={() => setError(null)}
-                disabled={props.entityStatus === 'loading'}
+                disabled={entityStatus === 'loading'}
             />
             <IconButton
                 onClick={onClickAddTask}
                 color={'primary'}
-                disabled={props.entityStatus === 'loading'}
+                disabled={entityStatus === 'loading'}
             >
                 <AddIcon fontSize={'default'} />
             </IconButton>
