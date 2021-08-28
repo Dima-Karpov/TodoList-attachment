@@ -10,7 +10,7 @@ export type EditableSpanPropsType = {
 };
 
 export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo((props) => {
-    
+
     const {
         title,
         changeTitle,
