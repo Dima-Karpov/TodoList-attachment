@@ -32,7 +32,7 @@ type PropsType = {
     entityStatus: RequestStatusType
 }
 
-export const TodoList = React.memo((props: PropsType) => {
+export const TodoList: React.FC<PropsType> = React.memo((props) => {
 
     const dispatch = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
