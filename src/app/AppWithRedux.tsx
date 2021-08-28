@@ -21,7 +21,7 @@ import { LogoutTC } from '../components/features/Login/auth-reducer';
 
 
 
-export function AppWithRedux() {
+export const AppWithRedux = React.memo(() => {
 
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
     const dispatch = useDispatch();
@@ -73,4 +73,4 @@ export function AppWithRedux() {
             </div>
         </BrowserRouter>
     );
-}
+});
