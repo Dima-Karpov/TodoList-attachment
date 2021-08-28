@@ -9,7 +9,13 @@ export type EditableSpanPropsType = {
 
 };
 
-export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
+export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo((props) => {
+    
+    const {
+        title,
+        changeTitle,
+        entityStatus,
+    } = props;
 
     const [editMode, setEditMode] = useState(false);
     const [newTaskTitle, setNewTaskTitle] = useState('')
@@ -17,7 +23,7 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
     const onEditMode = () => setEditMode(true);
     const OffEditMode = () => {
         setEditMode(false);
-        props.changeTitle(newTaskTitle)
+        changeTitle(newTaskTitle)
         // setNewTaskTitle('') нужно подумать следует ли так делать
     };
     const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,11 +37,11 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
                 onBlur={OffEditMode}
                 autoFocus
                 onChange={onChangeTitle}
-                disabled={props.entityStatus === 'loading'}
+                disabled={entityStatus === 'loading'}
             /> :
             <span
                 onDoubleClick={onEditMode}
             >
-                {props.title}</span>
+                {title}</span>
     )
 });
