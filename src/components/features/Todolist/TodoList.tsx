@@ -31,7 +31,7 @@ type PropsType = {
 
 export const TodoList: React.FC<PropsType> = React.memo((props) => {
 
-    const getTasksForTodoList = () => {
+    const getTasksForTodoList = useCallback(() => {
         switch (props.filter) {
             case 'completed':
                 return props.tasks.filter(t => t.status === TaskStatuses.New)
@@ -40,7 +40,7 @@ export const TodoList: React.FC<PropsType> = React.memo((props) => {
             default:
                 return props.tasks
         }
-    };
+    }, [props]);
 
     let newTasks = getTasksForTodoList();
 
