@@ -76,7 +76,7 @@ export const todoListReduser = (todoLists: Array<TodoListDomainType> = initialSt
         case change_todolist_entity_status:
             return [...todoLists].map(tl => tl.id === action.todoListId ? { ...tl, entityStatus: action.entityStatus } : tl)
         case 'TODOLIST/CLEAR-DELETE':
-            return []
+            return [];
         default:
             return todoLists
     }

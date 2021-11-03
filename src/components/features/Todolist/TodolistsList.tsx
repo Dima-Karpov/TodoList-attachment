@@ -44,7 +44,6 @@ export const TodolistsList: React.FC = React.memo(() => {
     const changeStatus = useCallback((todoListID: string, id: string, status: TaskStatuses) => {
         dispatch(updateTaskTC(todoListID, id, { status }))
     }, [dispatch]);
-
     const changeTaskTitle = useCallback((todoListID: string, id: string, newTitle: string) => {
         dispatch(updateTaskTC(todoListID, id, { title: newTitle }))
     }, [dispatch]);

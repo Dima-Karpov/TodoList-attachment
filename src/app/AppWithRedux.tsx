@@ -64,8 +64,9 @@ export const AppWithRedux = React.memo(() => {
                         <Route exact path={'/'} render={() => <TodolistsList />} />
                         <Route path={'/login'} render={() => <Login />} />
                         <Redirect from={'/TodoList-attachment'} to={'/'} />
-                        <Route path={'/404'} render={() => <h1 style={{ fontSize: '50px', textAlign: 'center' }}>404: PAGE NOT FOUND</h1>} />
-                        <Redirect from={'*'} to={'/404'} />
+                        <Redirect from={'dima-karpov.github.io/TodoList-attachment/'} to={'/'} />
+                        {/* <Route path={'/404'} render={() => <h1 style={{ fontSize: '50px', textAlign: 'center' }}>404: PAGE NOT FOUND</h1>} /> */}
+                        {/* <Redirect from={'*'} to={'/404'} /> */}
                     </Switch>
 
                 </Container>

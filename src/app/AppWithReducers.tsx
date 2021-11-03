@@ -44,22 +44,22 @@ import React, { useReducer, useState } from 'react';
 //         ]
 //     );
 
-//     const [tasks, dispathTasks] = useReducer(tasksReducer, 
-//         {
-//             [todoListID_1]: [
-//                 { id: v1(), title: "HTML&CSS", isDone: true },
-//                 { id: v1(), title: "JS", isDone: true },
-//                 { id: v1(), title: "ReactJS", isDone: false },
-//                 { id: v1(), title: "Redax", isDone: true },
-//             ],
-//             [todoListID_2]: [
-//                 { id: v1(), title: "HTML&CSS", isDone: true },
-//                 { id: v1(), title: "JS", isDone: true },
-//                 { id: v1(), title: "ReactJS", isDone: false },
-//                 { id: v1(), title: "Redax", isDone: false },
-//             ]
-//         }
-//     );
+    // const [tasks, dispathTasks] = useReducer(tasksReducer, 
+    //     {
+    //         [todoListID_1]: [
+    //             { id: v1(), title: "HTML&CSS", isDone: true },
+    //             { id: v1(), title: "JS", isDone: true },
+    //             { id: v1(), title: "ReactJS", isDone: false },
+    //             { id: v1(), title: "Redax", isDone: true },
+    //         ],
+    //         [todoListID_2]: [
+    //             { id: v1(), title: "HTML&CSS", isDone: true },
+    //             { id: v1(), title: "JS", isDone: true },
+    //             { id: v1(), title: "ReactJS", isDone: false },
+    //             { id: v1(), title: "Redax", isDone: false },
+    //         ]
+    //     }
+    // );
 
 //     function removeTasks(id: string, todoListID: string) {
 //         dispathTasks(removeTasksAC(id, todoListID));
