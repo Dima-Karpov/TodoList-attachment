@@ -31,7 +31,6 @@ export const AppWithRedux = React.memo(() => {
     const logoutHandler = () => {
         dispatch(LogoutTC())
     };
-
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [dispatch]);
